@@ -668,7 +668,7 @@ export default function Component() {
                 The powerful and flexible theme for all kinds of businesses
               </Typography>
               <Typography color="text.secondary" sx={{ mb: 4 }}>
-                Whether you're creating a subscription service, an on-demand
+                Whether you are creating a subscription service, an on-demand
                 marketplace, an e-commerce store, or a portfolio showcase,
                 theFront helps you create the best possible product for your
                 users.
