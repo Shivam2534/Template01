@@ -683,6 +683,8 @@ export default function Component() {
                         fontWeight: 500,
                         color: "primary.main",
                         mb: 1,
+                        display: "flex",
+                        justifyContent: "center"
                       }}
                     >
                       {stat.number}
