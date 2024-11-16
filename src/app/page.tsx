@@ -193,6 +193,9 @@ export default function Component() {
   const handleMouseEnter = (section: string) => {
     setOpenSection(section); // Expand the hovered section
   };
+  const handleMouseEnterClick = (section: string) => {
+    setOpenSection(section); // Expand the hovered section
+  };
 
   const handleMouseLeave = () => {
     setOpenSection(null); // Collapse the section
@@ -202,7 +205,6 @@ export default function Component() {
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
@@ -211,6 +213,7 @@ export default function Component() {
             key={text}
             onMouseEnter={() => handleMouseEnter(text)}
             onMouseLeave={handleMouseLeave}
+            onClick={() => handleMouseEnterClick(text)}
           >
             {/* Main List Item */}
             <ListItem disablePadding>
@@ -235,7 +238,11 @@ export default function Component() {
               >
                 {menuItemsMobile[text as keyof typeof menuItemsMobile].map(
                   (subItem) => (
-                    <ListItem key={subItem} disablePadding>
+                    <ListItem
+                      key={subItem}
+                      disablePadding
+                      onClick={toggleDrawer("left", false)}
+                    >
                       <ListItemButton>
                         <ListItemText primary={subItem} />
                       </ListItemButton>
@@ -684,7 +691,7 @@ export default function Component() {
                         color: "primary.main",
                         mb: 1,
                         display: "flex",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                     >
                       {stat.number}
