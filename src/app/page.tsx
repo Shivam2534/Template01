@@ -612,7 +612,12 @@ export default function Component() {
               bgcolor: "#21325B", // Background color
               color: "#FFFFFF", // Text color for better readability
               padding: 2, // Optional: Adds spacing inside the Box
-              width: "40%",
+              width: {
+                xs: "90%", // For extra-small screens (mobile)
+                sm: "70%", // For small screens (tablet)
+                md: "50%", // For medium screens (laptops)
+                lg: "40%", // For large screens (desktop)
+              },
               borderRadius: "10px",
             }}
           >
@@ -640,11 +645,6 @@ export default function Component() {
       {/* THIS IS A 3RD CONATINER */}
       <Box
         component="section"
-        // sx={{
-        //   py: { xs: 8, md: 12 },
-        //   backgroundColor: "background.paper",
-        //   background: "linear-gradient(to bottom, #FFFFFF, #F7FAFF)",
-        // }}
         sx={{
           position: "relative",
           background: "linear-gradient(180deg, #FFFFFF 0%, #F7FAFF 100%)",
@@ -773,7 +773,10 @@ export default function Component() {
             left: 0,
             right: 0,
             width: "100%",
-            height: "10%", // Adjust this value to change the curve's height
+            height: {
+              xs: "2%",
+              sm: "10%",
+            }, // Adjust this value to change the curve's height
             zIndex: 1,
           }}
         >
