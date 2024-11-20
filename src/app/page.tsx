@@ -510,21 +510,32 @@ export default function Component() {
           }}
         >
           <Typography>Trusted by the best companies</Typography>
-          <Box
+          <Grid
+            container
+            spacing={2}
             sx={{
-              display: "flex",
               width: "100%",
               justifyContent: "space-around",
               mt: 5,
               color: "#6E6F71",
             }}
           >
-            <Typography variant="h5">Probz.ai</Typography>
-            <Typography variant="h5">Google</Typography>
-            <Typography variant="h5">Microsoft</Typography>
-            <Typography variant="h5">Salesforce</Typography>
-            <Typography variant="h5">Spotify</Typography>
-          </Box>
+            <Grid item>
+              <Typography variant="h5">Probz.ai</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5">Google</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5">Microsoft</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5">Salesforce</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="h5">Spotify</Typography>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
 
