@@ -769,7 +769,7 @@ export default function Component() {
                 mx: "auto",
               }}
             >
-              It's built with default Material UI components with little
+              It is built with default Material UI components with little
               customization.
             </Typography>
           </Box>
