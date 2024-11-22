@@ -238,144 +238,148 @@ export default function Navbar() {
           zIndex: 10,
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <AppBar position="static" color="transparent" elevation={0}>
-            <Container maxWidth="lg">
-              <Toolbar disableGutters>
-                {/* Logo - Desktop */}
-                <Box
-                  sx={{
-                    display: { xs: "none", md: "flex" },
-                    alignItems: "center",
-                    gap: 1,
-                  }}
+            {/* <Container maxWidth="xl"> */}
+            <Toolbar disableGutters>
+              {/* Logo - Desktop */}
+              <Box
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                <Image src={logo} alt="logo" height={30} width={30} />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={{ textDecoration: "none", color: "inherit" }}
                 >
-                  <Image src={logo} alt="logo" height={30} width={30} />
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    Probz.Ai
-                  </Typography>
-                </Box>
+                  Probz.Ai
+                </Typography>
+              </Box>
 
-                {/* Mobile menu */}
-                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-                  <IconButton
-                    size="large"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color="inherit"
-                  >
-                    <Icon icon="material-symbols:menu" />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "left",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "left",
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={handleCloseNavMenu}
-                    sx={{
-                      display: { xs: "block", md: "none" },
-                    }}
-                  >
-                    {pages.map((page) => (
-                      <MenuItem
-                        key={typeof page === "string" ? page : page.name}
-                        onClick={handleCloseNavMenu}
-                      >
-                        <Typography textAlign="center">
-                          {typeof page === "string" ? page : page.name}
-                          {typeof page !== "string" && page.isNew && (
-                            <Chip
-                              label="New"
-                              size="small"
-                              sx={{
-                                ml: 1,
-                                bgcolor: "#e3f2fd",
-                                color: "#0095ff",
-                              }}
-                            />
-                          )}
-                        </Typography>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </Box>
-
-                {/* Logo - Mobile */}
-                <Box
-                  sx={{
-                    display: { xs: "flex", md: "none" },
-                    alignItems: "center",
-                    gap: 1,
-                    flexGrow: 1,
-                  }}
+              {/* Mobile menu */}
+              <Box
+                sx={{
+                  display: { xs: "flex", md: "none", alignItems: "center" },
+                }}
+              >
+                <IconButton
+                  size="large"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
                 >
-                  <Image src={logo} alt="logo" height={24} width={24} />
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="a"
-                    href="/"
-                    sx={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    Probz.Ai
-                  </Typography>
-                </Box>
-
-                {/* Desktop menu */}
-                <Box
+                  <Icon icon="material-symbols:menu" />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
                   sx={{
-                    flexGrow: 1,
-                    display: { xs: "none", md: "flex" },
-                    justifyContent: "center",
-                    gap: 2,
+                    display: { xs: "block", md: "none" },
                   }}
                 >
                   {pages.map((page) => (
-                    <Button
+                    <MenuItem
                       key={typeof page === "string" ? page : page.name}
                       onClick={handleCloseNavMenu}
-                      sx={{
-                        color: "text.primary",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                      }}
                     >
-                      {typeof page === "string" ? page : page.name}
-                      {typeof page !== "string" && page.isNew && (
-                        <Chip
-                          label="New"
-                          size="small"
-                          sx={{ bgcolor: "#CDDFF8", color: "#0A98FF" }}
-                        />
-                      )}
-                    </Button>
+                      <Typography textAlign="center">
+                        {typeof page === "string" ? page : page.name}
+                        {typeof page !== "string" && page.isNew && (
+                          <Chip
+                            label="New"
+                            size="small"
+                            sx={{
+                              ml: 1,
+                              bgcolor: "#e3f2fd",
+                              color: "#0095ff",
+                            }}
+                          />
+                        )}
+                      </Typography>
+                    </MenuItem>
                   ))}
-                </Box>
+                </Menu>
+              </Box>
 
-                {/* Login button */}
-                <Box>
-                  <Button variant="contained" color="primary">
-                    Log In
+              {/* Logo - Mobile */}
+              <Box
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  alignItems: "center",
+                  gap: 1,
+                  flexGrow: 1,
+                }}
+              >
+                <Image src={logo} alt="logo" height={24} width={24} />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="a"
+                  href="/"
+                  sx={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Probz.Ai
+                </Typography>
+              </Box>
+
+              {/* Desktop menu */}
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "none", md: "flex" },
+                  justifyContent: "center",
+                  gap: 2,
+                }}
+              >
+                {pages.map((page) => (
+                  <Button
+                    key={typeof page === "string" ? page : page.name}
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      color: "text.primary",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                    }}
+                  >
+                    {typeof page === "string" ? page : page.name}
+                    {typeof page !== "string" && page.isNew && (
+                      <Chip
+                        label="New"
+                        size="small"
+                        sx={{ bgcolor: "#CDDFF8", color: "#0A98FF" }}
+                      />
+                    )}
                   </Button>
-                </Box>
-              </Toolbar>
-            </Container>
+                ))}
+              </Box>
+
+              {/* Login button */}
+              <Box>
+                <Button variant="contained" color="primary">
+                  Log In
+                </Button>
+              </Box>
+            </Toolbar>
+            {/* </Container> */}
           </AppBar>
         </Container>
       </Box>
