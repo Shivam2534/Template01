@@ -1,1123 +1,1067 @@
 "use client";
 
-import { useState } from "react";
+import * as React from "react";
 import {
   AppBar,
   Box,
-  Button,
-  Container,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
   Toolbar,
+  IconButton,
   Typography,
-  useMediaQuery,
-  useTheme,
-  TextField,
+  Menu,
+  Container,
+  Button,
+  MenuItem,
+  Chip,
+  Avatar,
+  AvatarGroup,
+  Paper,
+  Select,
+  LinearProgress,
   Grid,
-  Card,
-  CardContent,
-  Accordion,
   AccordionSummary,
   AccordionDetails,
+  Stack,
+  CardContent,
+  Accordion,
+  Card,
+  useTheme,
+  useMediaQuery,
   Link,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
-import dashboard from "../../public/dashboard.jpg";
-import shortDash from "../../public/shortDash.png";
-
 import Image from "next/image";
-import { ExpandMore } from "@mui/icons-material";
-// import Link from "next/link";
+import logo from "../../public/logo.png";
+import img1 from "../../public/img1.webp";
+import user1 from "../../public/user1.jpg";
+import user2 from "../../public/user2.jpg";
+import user3 from "../../public/user3.jpg";
 
-export default function Component() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+const pages = [
+  "About",
+  "Blog",
+  { name: "Portfolio", isNew: true },
+  "Dashboard",
+  "Pricing",
+  "Contact",
+];
 
-  const navItems = [
-    "Features",
-    "Testimonials",
-    "Highlights",
-    "Pricing",
-    "FAQ",
-    "Blog",
-  ];
-
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
-  };
-
-  const drawer = (
-    <Box
-      onClick={handleDrawerToggle}
-      sx={{ textAlign: "center", bgcolor: "#04111F", height: "100%" }}
-    >
-      <Typography
-        variant="h6"
-        sx={{
-          my: 2,
-          display: "flex",
-          alignItems: "center",
-          gap: 1,
-          color: "#4876EE",
-          justifyContent: "center",
-        }}
-      >
-        <Icon icon="clarity:node-solid" color="white" width="24" height="24" />
-        Sitemark
-      </Typography>
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center", color: "white" }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-        <ListItem disablePadding>
-          <ListItemButton sx={{ textAlign: "center", color: "white" }}>
-            <ListItemText primary="Sign in" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton
-            sx={{
-              textAlign: "center",
-              bgcolor: "white",
-              color: "black",
-              my: 1,
-              mx: 2,
-              borderRadius: 1,
-            }}
-          >
-            <ListItemText primary="Sign up" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
+export default function Navbar() {
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
   );
 
-  const [email, setEmail] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle form submission
-    console.log("Email submitted:", email);
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
   };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const technologies = [
+    { icon: "logos:react", label: "React" },
+    { icon: "logos:material-ui", label: "Material-UI" },
+    { icon: "logos:nextjs-icon", label: "Next.js" },
+    { icon: "logos:typescript-icon", label: "TypeScript" },
+    { icon: "logos:redux", label: "Redux" },
+    { icon: "vscode-icons:file-type-light-js", label: "JavaScript" },
+  ];
 
   const features = [
     {
-      icon: "material-symbols:dashboard",
-      title: "Dashboard",
-      description:
-        "This item could provide a snapshot of the most important metrics or data points related to the product.",
+      icon: "mdi:account-tie",
+      title: "Expert Advisor",
+      description: "Suspendisse vestibulum eu erat ac scelerisque.",
+      iconBg: "#FFF1F0",
     },
     {
-      icon: "material-symbols:phone-iphone",
-      title: "Mobile integration",
-      description:
-        "This item could provide information about the mobile app version of the product.",
+      icon: "mdi:bank",
+      title: "Effective Support",
+      description: "Suspendisse vestibulum eu erat ac scelerisque.",
+      iconBg: "#E3F2FD",
     },
     {
-      icon: "material-symbols:devices",
-      title: "Available on all platforms",
-      description:
-        "This item could let users know the product is available on all platforms, such as web, mobile, and desktop.",
-    },
-  ];
-
-  const highlights = [
-    {
-      icon: "mdi:cog",
-      title: "Adaptable performance",
-      description:
-        "Our product effortlessly adjusts to your needs, boosting efficiency and simplifying your tasks.",
+      icon: "mdi:calculator",
+      title: "Low Fees",
+      description: "Suspendisse vestibulum eu erat ac scelerisque.",
+      iconBg: "#E6F7F0",
     },
     {
-      icon: "mdi:wrench",
-      title: "Built to last",
-      description:
-        "Experience unmatched durability that goes above and beyond with lasting investment.",
-    },
-    {
-      icon: "mdi:thumb-up",
-      title: "Great user experience",
-      description:
-        "Integrate our product into your routine with an intuitive and easy-to-use interface.",
-    },
-    {
-      icon: "mdi:lightbulb",
-      title: "Innovative functionality",
-      description:
-        "Stay ahead with features that set new standards, addressing your evolving needs better than the rest.",
-    },
-    {
-      icon: "mdi:headset",
-      title: "Reliable support",
-      description:
-        "Count on our responsive customer support, offering assistance that goes beyond the purchase.",
-    },
-    {
-      icon: "mdi:target",
-      title: "Precision in every detail",
-      description:
-        "Enjoy a meticulously crafted product where small touches make a significant impact on your overall experience.",
+      icon: "mdi:chart-line",
+      title: "Loan Facility",
+      description: "Suspendisse vestibulum eu erat ac scelerisque.",
+      iconBg: "#FFF4E5",
     },
   ];
 
-  const plans = [
+  const features1 = [
     {
-      name: "Free",
-      price: "0",
-      features: [
-        "10 users included",
-        "2 GB of storage",
-        "Help center access",
-        "Email support",
+      icon: "mdi:account-group",
+      title: "Team Scheduling",
+      isActive: true,
+    },
+    {
+      icon: "mdi:bank",
+      title: "Payments",
+      isActive: false,
+    },
+    {
+      icon: "mdi:code-brackets",
+      title: "Embedding",
+      isActive: false,
+    },
+    {
+      icon: "mdi:workflow",
+      title: "Workflows",
+      isActive: false,
+    },
+  ];
+
+  const accordionItems = [
+    {
+      title: "Factor in outside colleagues",
+      content:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum sit inventore.",
+    },
+    {
+      title: "Combine teammate schedules",
+      content:
+        "Factor in availability for required attendees, and skip checking for conflicts for optional attendees.",
+      expanded: true,
+    },
+    {
+      title: "Round robin pooling",
+      content:
+        "veniam facilis accusamus voluptasctus expedita, obcaecati nihil, hic debitis excepturi exercitationem!",
+    },
+  ];
+
+  const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
+
+  const handleAccordionToggle = (index: number) => {
+    setExpandedIndex((prev) => (prev === index ? null : index));
+  };
+
+  const testimonials = [
+    {
+      content:
+        "This template is great, UI-rich and up-to-date. Although it is pretty much complete, I suggest to improve a bit of documentation. Thanks & Highly recommended!",
+      author: "Jenny Wilson",
+      role: "CEO & Head of Comp Inc.",
+      avatar: user1,
+    },
+    {
+      content:
+        "Pellentesque varius semper odio non pretium. Nullam sagittis neque orci, eu elementum enim.",
+      author: "Robert Fox",
+      role: "CTO of Tech Corp",
+      avatar: user2,
+    },
+    {
+      content:
+        "Suspendisse vestibulum eu erat ac scelerisque. Integer condimentum elit vel magna.",
+      author: "Sarah Chen",
+      role: "Product Director",
+      avatar: user3,
+    },
+  ];
+
+  const companies = [
+    { name: "Intel" },
+    { name: "Oracle" },
+    { name: "Dell" },
+    { name: "Samsung" },
+    { name: "Infosys" },
+    { name: "Capgemini" },
+  ];
+
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === 0 ? testimonials.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === testimonials.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const sections = [
+    {
+      title: "Applications",
+      links: ["Kanban", "Invoice List", "eCommerce", "Chat", "Tickets", "Blog"],
+    },
+    {
+      title: "Forms",
+      links: [
+        "Form Layout",
+        "Form Horizontal",
+        "Form Wizard",
+        "Form Validation",
+        "Quill Editor",
       ],
-      buttonText: "Sign up for free",
-      buttonVariant: "outlined",
     },
     {
-      name: "Professional",
-      price: "15",
-      features: [
-        "20 users included",
-        "10 GB of storage",
-        "Help center access",
-        "Priority email support",
-        "Dedicated team",
-        "Best deals",
+      title: "Tables",
+      links: [
+        "Basic Table",
+        "Fixed Header",
+        "Pagination Table",
+        "React Dense Table",
+        "Row Selection Table",
+        "Drag n Drop Table",
       ],
-      buttonText: "Start now",
-      buttonVariant: "contained",
-      recommended: true,
-    },
-    {
-      name: "Enterprise",
-      price: "30",
-      features: [
-        "50 users included",
-        "30 GB of storage",
-        "Help center access",
-        "Phone & email support",
-      ],
-      buttonText: "Contact us",
-      buttonVariant: "outlined",
     },
   ];
 
-  const faqs = [
-    {
-      question:
-        "How do I contact customer support if I have a question or issue?",
-      answer:
-        "You can contact our customer support via email at support@example.com or call us at 123-456-7890.",
-    },
-    {
-      question: "Can I return the product if it doesn't meet my expectations?",
-      answer:
-        "Yes, we offer a 30-day return policy. Please check our return policy for more details.",
-    },
-    {
-      question: "What makes your product stand out from others in the market?",
-      answer:
-        "Our product is designed with premium materials and comes with exclusive features tailored to our customers' needs.",
-    },
-    {
-      question: "Is there a warranty on the product, and what does it cover?",
-      answer:
-        "Yes, we offer a one-year warranty that covers manufacturing defects. Terms and conditions apply.",
-    },
+  const socialLinks = [
+    { icon: "mdi:facebook", url: "#" },
+    { icon: "mdi:twitter", url: "#" },
+    { icon: "mdi:instagram", url: "#" },
   ];
-
   return (
-    <Container>
-      <Box sx={{ display: "flex" }}>
-        <AppBar
-          position="static"
-          sx={{
-            bgcolor: "#04111F",
-            border: "2px solid #212B3B",
-            borderRadius: 5,
-            my: 2,
-          }}
-        >
-          <Toolbar sx={{ justifyContent: "space-between", py: 1 }}>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: { xs: 1, md: 3 },
-              }}
-            >
-              <Icon
-                icon="clarity:node-solid"
-                color="white"
-                width="24"
-                height="24"
-              />
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{
-                  color: "#4876EE",
-                  fontWeight: 600,
-                  fontSize: { xs: 16, sm: 18 },
-                }}
-              >
-                Probz.Ai
-              </Typography>
+    <Box sx={{ width: "100%" }}>
+      {/* Navbar */}
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          height: 100,
+          bgcolor: "#E5F3FB",
+          position: "fixed",
+          alignItems: "center",
+          zIndex: 10,
+        }}
+      >
+        <Container maxWidth="xl">
+          <AppBar position="static" color="transparent" elevation={0}>
+            <Container maxWidth="lg">
+              <Toolbar disableGutters>
+                {/* Logo - Desktop */}
+                <Box
+                  sx={{
+                    display: { xs: "none", md: "flex" },
+                    alignItems: "center",
+                    gap: 1,
+                  }}
+                >
+                  <Image src={logo} alt="logo" height={30} width={30} />
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    href="/"
+                    sx={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Probz.Ai
+                  </Typography>
+                </Box>
 
-              {!isMobile && (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  {navItems.map((item) => (
+                {/* Mobile menu */}
+                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                  <IconButton
+                    size="large"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color="inherit"
+                  >
+                    <Icon icon="material-symbols:menu" />
+                  </IconButton>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElNav}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    sx={{
+                      display: { xs: "block", md: "none" },
+                    }}
+                  >
+                    {pages.map((page) => (
+                      <MenuItem
+                        key={typeof page === "string" ? page : page.name}
+                        onClick={handleCloseNavMenu}
+                      >
+                        <Typography textAlign="center">
+                          {typeof page === "string" ? page : page.name}
+                          {typeof page !== "string" && page.isNew && (
+                            <Chip
+                              label="New"
+                              size="small"
+                              sx={{
+                                ml: 1,
+                                bgcolor: "#e3f2fd",
+                                color: "#0095ff",
+                              }}
+                            />
+                          )}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+
+                {/* Logo - Mobile */}
+                <Box
+                  sx={{
+                    display: { xs: "flex", md: "none" },
+                    alignItems: "center",
+                    gap: 1,
+                    flexGrow: 1,
+                  }}
+                >
+                  <Image src={logo} alt="logo" height={24} width={24} />
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="a"
+                    href="/"
+                    sx={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    Probz.Ai
+                  </Typography>
+                </Box>
+
+                {/* Desktop menu */}
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                    display: { xs: "none", md: "flex" },
+                    justifyContent: "center",
+                    gap: 2,
+                  }}
+                >
+                  {pages.map((page) => (
                     <Button
-                      key={item}
+                      key={typeof page === "string" ? page : page.name}
+                      onClick={handleCloseNavMenu}
                       sx={{
-                        color: "white",
-                        fontWeight: 500,
-                        textTransform: "none",
-                        fontSize: { xs: 12, sm: 14 },
+                        color: "text.primary",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1,
                       }}
                     >
-                      {item}
+                      {typeof page === "string" ? page : page.name}
+                      {typeof page !== "string" && page.isNew && (
+                        <Chip
+                          label="New"
+                          size="small"
+                          sx={{ bgcolor: "#CDDFF8", color: "#0A98FF" }}
+                        />
+                      )}
                     </Button>
                   ))}
                 </Box>
-              )}
-            </Box>
 
-            <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-              {!isMobile && (
-                <Button
-                  sx={{
-                    color: "white",
-                    fontWeight: 500,
-                    textTransform: "none",
-                    fontSize: { xs: 12, sm: 14 },
-                  }}
-                >
-                  Sign in
-                </Button>
-              )}
-              {!isMobile && (
-                <Button
-                  variant="contained"
-                  sx={{
-                    bgcolor: "white",
-                    color: "black",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    fontSize: { xs: 12, sm: 14 },
-                    "&:hover": {
-                      bgcolor: "#e0e0e0",
-                    },
-                  }}
-                >
-                  Sign up
-                </Button>
-              )}
-              {isMobile && (
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  sx={{ color: "white" }}
-                >
-                  <Icon icon="material-symbols:menu" />
-                </IconButton>
-              )}
-            </Box>
-          </Toolbar>
-        </AppBar>
-        <Box component="nav">
-          <Drawer
-            variant="temporary"
-            anchor="right"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true,
-            }}
-            sx={{
-              display: { xs: "block", md: "none" },
-              "& .MuiDrawer-paper": { boxSizing: "border-box", width: "100%" },
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Box>
+                {/* Login button */}
+                <Box>
+                  <Button variant="contained" color="primary">
+                    Log In
+                  </Button>
+                </Box>
+              </Toolbar>
+            </Container>
+          </AppBar>
+        </Container>
       </Box>
 
-      <Box
-        sx={{
-          bgcolor: "#040E1A",
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          mt: {
-            sm: -15,
-          },
-        }}
-      >
-        <Container maxWidth="md">
+      {/* Hero Section */}
+      <Box sx={{ width: "100%", bgcolor: "#E5F3FB" }}>
+        <Container maxWidth="lg" sx={{ pt: 15, bgcolor: "#E5F3FB" }}>
           <Box
-            component="form"
-            onSubmit={handleSubmit}
             sx={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: { xs: "column", md: "row" },
               alignItems: "center",
-              textAlign: "center",
-              py: { xs: 8, md: 12 },
-              gap: 1,
+              gap: 4,
             }}
           >
+            <Box sx={{ flex: 1 }}>
+              <Typography
+                variant="h1"
+                sx={{
+                  fontSize: { xs: "2.5rem", md: "3.5rem" },
+                  fontWeight: 700,
+                  mb: 2,
+                  lineHeight: 1.2,
+                }}
+              >
+                A feature-packed dashboard built for developers needs.
+              </Typography>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                <AvatarGroup max={3} sx={{ mr: 2 }}>
+                  <Avatar alt="User 1" src={user1.src} />
+                  <Avatar alt="User 2" src={user2.src} />
+                  <Avatar alt="User 3" src={user3.src} />
+                </AvatarGroup>
+                <Typography variant="body1" color="text.secondary">
+                  52,589+ developers & agencies using our templates
+                </Typography>
+              </Box>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 4 }}>
+                {technologies.map((tech) => (
+                  <Box
+                    key={tech.label}
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      bgcolor: "background.paper",
+                      borderRadius: 1,
+                      boxShadow: 1,
+                    }}
+                  >
+                    <Icon icon={tech.icon} width="24" height="24" />
+                  </Box>
+                ))}
+              </Box>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                sx={{
+                  mb: {
+                    md: 10,
+                    sm: 10,
+                    xs: 10,
+                  },
+                }}
+              >
+                Log In
+              </Button>
+            </Box>
+
+            {/* Dashboard Preview */}
+            <Box sx={{ flex: 1, display: { xs: "none", lg: "block" } }}>
+              <Paper
+                elevation={3}
+                sx={{ p: 3, borderRadius: 2, bgcolor: "background.paper" }}
+              >
+                <Box sx={{ mb: 3 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Congratulations Jonathan
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    You have done 38% more sales
+                  </Typography>
+                </Box>
+                <Box sx={{ mb: 3 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Box
+                      sx={{ mr: 2, p: 1, bgcolor: "#E7F7F0", borderRadius: 1 }}
+                    >
+                      <Icon
+                        icon="mdi:basket"
+                        color="#4CAF50"
+                        width="24"
+                        height="24"
+                      />
+                    </Box>
+                    <Box>
+                      <Typography variant="h6">64 new orders</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Processing
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Box
+                      sx={{ mr: 2, p: 1, bgcolor: "#FFF8E1", borderRadius: 1 }}
+                    >
+                      <Icon
+                        icon="mdi:clock-outline"
+                        color="#FFC107"
+                        width="24"
+                        height="24"
+                      />
+                    </Box>
+                    <Box>
+                      <Typography variant="h6">4 orders</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        On hold
+                      </Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Box
+                      sx={{ mr: 2, p: 1, bgcolor: "#E8EAF6", borderRadius: 1 }}
+                    >
+                      <Icon
+                        icon="mdi:truck-delivery"
+                        color="#3F51B5"
+                        width="24"
+                        height="24"
+                      />
+                    </Box>
+                    <Box>
+                      <Typography variant="h6">12 orders</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Delivered
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box sx={{ mb: 3 }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      mb: 2,
+                    }}
+                  >
+                    <Typography variant="h6">Total Orders</Typography>
+                    <Select
+                      value="This Week"
+                      size="small"
+                      sx={{ minWidth: 120 }}
+                    >
+                      <MenuItem value="This Week">This Week</MenuItem>
+                      <MenuItem value="Last Week">Last Week</MenuItem>
+                      <MenuItem value="Last Month">Last Month</MenuItem>
+                    </Select>
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    Weekly order updates
+                  </Typography>
+                  <Box
+                    sx={{
+                      height: 100,
+                      bgcolor: "#F5F5F5",
+                      borderRadius: 1,
+                      p: 2,
+                    }}
+                  >
+                    {/* Placeholder for chart */}
+                    <Typography variant="body2" color="text.secondary">
+                      Chart placeholder
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box>
+                  <Typography variant="h6" gutterBottom>
+                    Latest Deal
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    Last 7 days
+                  </Typography>
+                  <Typography variant="h4" gutterBottom>
+                    $98,500
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      mb: 1,
+                    }}
+                  >
+                    <Typography variant="body2" color="text.secondary">
+                      Coupons used: 18/40
+                    </Typography>
+                    <Typography variant="body2" color="primary">
+                      45%
+                    </Typography>
+                  </Box>
+                  <LinearProgress
+                    variant="determinate"
+                    value={45}
+                    sx={{ height: 8, borderRadius: 4 }}
+                  />
+                </Box>
+              </Paper>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
+      <Box sx={{ width: "100%", bgcolor: "white" }}>
+        <Container maxWidth="lg" sx={{ py: 8 }}>
+          <Box sx={{ maxWidth: 600, mb: 8 }}>
             <Typography
-              variant="h1"
+              variant="h2"
+              component="h2"
               sx={{
-                fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
+                fontSize: { xs: "2.5rem", md: "3.5rem" },
                 fontWeight: 700,
                 mb: 2,
-                color: "white",
+                lineHeight: 1.2,
               }}
             >
-              Our latest{" "}
-              <Box component="span" sx={{ color: "#3B82F6" }}>
-                products
-              </Box>
+              Over 45,000 clients and counting.
             </Typography>
-            <Typography
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+              Pellentesque varius semper odio non pretium. Nullam sagittis neque
+              orci, eu elementum enim.
+            </Typography>
+            <Button
+              variant="text"
+              color="primary"
               sx={{
-                color: "#94A3B8",
-                fontSize: { xs: "1rem", sm: "1.125rem" },
-                maxWidth: "800px",
-                mb: 1,
+                p: 0,
+                "&:hover": {
+                  background: "none",
+                  textDecoration: "underline",
+                },
               }}
             >
-              Explore our cutting-edge dashboard, delivering high-quality
-              solutions tailored to your needs.
-            </Typography>
-            <Typography
-              sx={{
-                color: "#94A3B8",
-                fontSize: { xs: "1rem", sm: "1.125rem" },
-                maxWidth: "800px",
-                mb: 4,
-              }}
+              Request a Callback
+            </Button>
+          </Box>
+
+          <Grid container spacing={4}>
+            {features.map((feature) => (
+              <Grid item xs={12} sm={6} md={3} key={feature.title}>
+                <Box>
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: "50%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: feature.iconBg,
+                      mb: 2,
+                    }}
+                  >
+                    <Icon icon={feature.icon} width={24} height={24} />
+                  </Box>
+                  <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>
+                    {feature.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {feature.description}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
+      <Box sx={{ width: "100%", bgcolor: "white" }}>
+        <Box sx={{ py: 8, bgcolor: "#f8fafc" }}>
+          <Container maxWidth="lg">
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={2}
+              sx={{ mb: 6 }}
             >
-              Elevate your experience with top-tier features and services.
-            </Typography>
+              {features1.map((feature) => (
+                <Card
+                  key={feature.title}
+                  sx={{
+                    flex: 1,
+                    cursor: "pointer",
+                    bgcolor: feature.isActive
+                      ? "primary.main"
+                      : "background.paper",
+                    color: feature.isActive
+                      ? "primary.contrastText"
+                      : "text.primary",
+                    "&:hover": {
+                      bgcolor: feature.isActive ? "primary.dark" : "grey.100",
+                    },
+                    transition: "background-color 0.3s",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      p: 2,
+                      "&:last-child": { pb: 2 },
+                    }}
+                  >
+                    <Icon
+                      icon={feature.icon}
+                      width={24}
+                      height={24}
+                      color={feature.isActive ? "white" : "currentColor"}
+                    />
+                    <Typography variant="subtitle1">{feature.title}</Typography>
+                  </CardContent>
+                </Card>
+              ))}
+            </Stack>
+            {/* Main Content */}
             <Box
               sx={{
                 display: "flex",
-                flexDirection: { xs: "column", sm: "row" },
-                gap: 2,
-                width: "100%",
-                maxWidth: "600px",
+                flexDirection: { xs: "column", md: "row" },
+                gap: 4,
+                alignItems: { xs: "center", md: "flex-start" },
               }}
             >
-              <TextField
-                fullWidth
-                placeholder="Your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              {/* Dashboard Preview */}
+              <Box
                 sx={{
-                  "& .MuiOutlinedInput-root": {
-                    color: "white",
-                    bgcolor: "rgba(255, 255, 255, 0.05)",
-                    "& fieldset": {
-                      borderColor: "rgba(255, 255, 255, 0.1)",
-                    },
-                    "&:hover fieldset": {
-                      borderColor: "rgba(255, 255, 255, 0.2)",
-                    },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "#3B82F6",
-                    },
-                  },
-                  "& .MuiOutlinedInput-input::placeholder": {
-                    color: "#94A3B8",
+                  flex: "1.5",
+                  width: "100%",
+                }}
+              >
+                <Image src={img1} alt="img1"></Image>
+              </Box>
+
+              {/* Feature Description */}
+              <Box sx={{ flex: 1, width: "100%" }}>
+                <Typography
+                  variant="h2"
+                  sx={{
+                    fontSize: { xs: "2rem", md: "2.5rem" },
+                    fontWeight: 700,
+                    mb: 4,
+                  }}
+                >
+                  Protect your focus.
+                </Typography>
+
+                {/* Accordion Items */}
+                <Stack spacing={2} sx={{ mb: 4 }}>
+                  {accordionItems.map((item, index) => (
+                    <Accordion
+                      key={index}
+                      expanded={expandedIndex === index}
+                      onChange={() => handleAccordionToggle(index)}
+                      sx={{
+                        boxShadow: "none",
+                        "&:before": { display: "none" },
+                        bgcolor: "transparent",
+                      }}
+                    >
+                      <AccordionSummary
+                        expandIcon={
+                          <Icon
+                            icon={`mdi:${
+                              expandedIndex === index ? "minus" : "plus"
+                            }`}
+                          />
+                        }
+                        sx={{
+                          px: 0,
+                          "& .MuiAccordionSummary-content": {
+                            my: 0,
+                          },
+                        }}
+                      >
+                        <Typography variant="h6">{item.title}</Typography>
+                      </AccordionSummary>
+                      {item.content && (
+                        <AccordionDetails sx={{ px: 0 }}>
+                          <Typography color="text.secondary">
+                            {item.content}
+                          </Typography>
+                        </AccordionDetails>
+                      )}
+                    </Accordion>
+                  ))}
+                </Stack>
+
+                <Button
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: 2,
+                    textTransform: "none",
+                  }}
+                >
+                  Learn More
+                </Button>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+      </Box>
+
+      <Box sx={{ py: 8, bgcolor: "background.paper" }}>
+        <Container maxWidth="lg">
+          {/* Testimonials Section */}
+          <Grid
+            container
+            spacing={4}
+            sx={{
+              flexDirection: { xs: "column", md: "row" }, // Stack on small screens, side-by-side on larger screens
+              alignItems: "flex-start",
+            }}
+          >
+            {/* Left Content */}
+            <Grid
+              item
+              xs={12}
+              md={6} // Take half-width on medium and larger screens
+              sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+            >
+              <Typography
+                variant="h2"
+                sx={{
+                  fontSize: { xs: "2.5rem", md: "3.5rem" },
+                  fontWeight: 700,
+                  mb: 2,
+                  color: "text.primary",
+                }}
+              >
+                Words from customers
+              </Typography>
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+                Pellentesque varius semper odio non pretium.
+              </Typography>
+              <Box sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
+                <IconButton
+                  onClick={handlePrevSlide}
+                  sx={{ color: "text.primary" }}
+                >
+                  <Icon icon="mdi:chevron-left" width={24} />
+                </IconButton>
+                <IconButton
+                  onClick={handleNextSlide}
+                  sx={{ color: "text.primary" }}
+                >
+                  <Icon icon="mdi:chevron-right" width={24} />
+                </IconButton>
+                <Typography
+                  variant="body2"
+                  component="span"
+                  sx={{ ml: 2, color: "text.secondary" }}
+                >
+                  {currentSlide + 1}/{testimonials.length}
+                </Typography>
+              </Box>
+            </Grid>
+
+            {/* Right Content - Testimonial Card */}
+            <Grid
+              item
+              xs={12}
+              md={6} // Take half-width on medium and larger screens
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 4,
+                position: "relative",
+                minHeight: "200px",
+              }}
+            >
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: { xs: "1.1rem", md: "1.25rem" },
+                    mb: 4,
+                    color: "text.primary",
+                  }}
+                >
+                  {testimonials[currentSlide].content}
+                </Typography>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <Avatar
+                    src={testimonials[currentSlide].avatar.src}
+                    alt={testimonials[currentSlide].author}
+                    sx={{ width: 64, height: 64 }}
+                  />
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      {testimonials[currentSlide].author}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {testimonials[currentSlide].role}
+                    </Typography>
+                  </Box>
+                </Stack>
+              </Box>
+              <Box sx={{ display: { sm: "block", md: "none" } }}>
+                <IconButton
+                  onClick={handlePrevSlide}
+                  sx={{ color: "text.primary" }}
+                >
+                  <Icon icon="mdi:chevron-left" width={24} />
+                </IconButton>
+                <IconButton
+                  onClick={handleNextSlide}
+                  sx={{ color: "text.primary" }}
+                >
+                  <Icon icon="mdi:chevron-right" width={24} />
+                </IconButton>
+                <Typography
+                  variant="body2"
+                  component="span"
+                  sx={{ ml: 2, color: "text.secondary" }}
+                >
+                  {currentSlide + 1}/{testimonials.length}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+
+          {/* Company Logos */}
+          <Stack
+            direction="row"
+            spacing={isMobile ? 2 : 4}
+            alignItems="center"
+            justifyContent="space-between"
+            sx={{
+              mt: 8,
+              flexWrap: "wrap",
+              gap: 4,
+            }}
+          >
+            {companies.map((company) => (
+              <Typography
+                key={company.name}
+                sx={{
+                  height: "40px",
+                  filter: "grayscale(100%)",
+                  opacity: 0.7,
+                  transition: "opacity 0.3s",
+                  "&:hover": {
                     opacity: 1,
                   },
                 }}
-              />
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{
-                  bgcolor: "white",
-                  color: "black",
-                  px: 4,
-                  py: 1.5,
-                  fontSize: "1rem",
-                  fontWeight: 500,
-                  "&:hover": {
-                    bgcolor: "#f8fafc",
-                  },
-                  width: { xs: "100%", sm: "auto" },
-                  whiteSpace: "nowrap",
-                }}
               >
-                Start now
-              </Button>
+                {company.name}
+              </Typography>
+            ))}
+          </Stack>
+        </Container>
+      </Box>
+
+      <Box sx={{ bgcolor: "#0A1929", color: "white", pt: 8, pb: 4 }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={4}>
+            {sections.map((section) => (
+              <Grid item xs={12} sm={6} md={3} key={section.title}>
+                <Typography variant="h6" sx={{ mb: 2, color: "white" }}>
+                  {section.title}
+                </Typography>
+                {section.links.map((link) => (
+                  <Typography
+                    key={link}
+                    component={Link}
+                    href="#"
+                    sx={{
+                      display: "block",
+                      mb: 1,
+                      color: "grey.500",
+                      textDecoration: "none",
+                      "&:hover": {
+                        color: "white",
+                      },
+                    }}
+                  >
+                    {link}
+                  </Typography>
+                ))}
+              </Grid>
+            ))}
+
+            {/* Social Links */}
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography variant="h6" sx={{ mb: 2, color: "white" }}>
+                Follow us
+              </Typography>
+              <Box sx={{ display: "flex", gap: 1 }}>
+                {socialLinks.map((social) => (
+                  <IconButton
+                    key={social.icon}
+                    href={social.url}
+                    sx={{
+                      color: "grey.500",
+                      "&:hover": {
+                        color: "white",
+                      },
+                    }}
+                  >
+                    <Icon icon={social.icon} width={24} height={24} />
+                  </IconButton>
+                ))}
+              </Box>
+            </Grid>
+          </Grid>
+
+          {/* Bottom Bar */}
+          <Box
+            sx={{
+              mt: 8,
+              pt: 4,
+              borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 2,
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Icon icon="fa6-solid:bird" color="#0095ff" width="20" />
+              <Typography variant="body2" color="grey.500">
+                All rights reserved by Probz.Ai.
+              </Typography>
             </Box>
-            <Typography sx={{ color: "#94A3B8", fontSize: "0.875rem", mt: 2 }}>
-              By clicking Start now you agree to our{" "}
-              <Box
-                component="a"
+
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography variant="body2" color="grey.500">
+                Produced by
+              </Typography>
+              <Link
                 href="#"
                 sx={{
-                  color: "white",
+                  color: "#0095ff",
                   textDecoration: "none",
                   "&:hover": {
                     textDecoration: "underline",
                   },
                 }}
               >
-                Terms & Conditions
-              </Box>
-            </Typography>
-          </Box>
-        </Container>
-      </Box>
+                Probz.Ai
+              </Link>
+            </Box>
 
-      <Box
-        sx={{
-          mt: {
-            md: -15,
-          },
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        <Image src={dashboard} alt="Dashboard" />
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            mt: 15,
-            color: "#94A0B8",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography>Trusted by the best companies</Typography>
-          <Grid
-            container
-            spacing={2}
-            sx={{
-              width: "100%",
-              justifyContent: "space-around",
-              mt: 5,
-              color: "#6E6F71",
-            }}
-          >
-            <Grid item>
-              <Typography variant="h5">Probz.ai</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5">Google</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5">Microsoft</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5">Salesforce</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5">Spotify</Typography>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-
-      <Box sx={{ bgcolor: "#04111F", py: { xs: 6, md: 10 }, mt: 10 }}>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            sx={{
-              color: "white",
-              fontSize: { xs: "2rem", md: "2.5rem" },
-              fontWeight: 600,
-              mb: 2,
-            }}
-          >
-            Product features
-          </Typography>
-          <Typography
-            sx={{
-              color: "#94A3B8",
-              fontSize: { xs: "1rem", md: "1.125rem" },
-              maxWidth: "800px",
-              mb: 6,
-            }}
-          >
-            Provide a brief overview of the key features of the product. For
-            example, you could list the number of features, their types or
-            benefits, and add-ons.
-          </Typography>
-
-          <Grid container spacing={4}>
-            <Grid item xs={12} md={6}>
-              <Box
-                sx={{
-                  bgcolor: "#0A1929",
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                }}
-              >
-                <Image
-                  src={shortDash}
-                  alt="Dashboard Preview"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    display: "block",
-                  }}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                {features.map((feature, index) => (
-                  <Box
-                    key={index}
-                    sx={{
-                      bgcolor: "#0A1929",
-                      p: 3,
-                      borderRadius: 2,
-                      border: "1px solid rgba(255,255,255,0.1)",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 2,
-                        mb: 2,
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          bgcolor: "rgba(255,255,255,0.1)",
-                          borderRadius: 1,
-                          p: 1,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Icon
-                          icon={feature.icon}
-                          width={24}
-                          height={24}
-                          color="#94A3B8"
-                        />
-                      </Box>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          color: "white",
-                          fontSize: { xs: "1.125rem", md: "1.25rem" },
-                          fontWeight: 500,
-                        }}
-                      >
-                        {feature.title}
-                      </Typography>
-                    </Box>
-                    <Typography
-                      sx={{
-                        color: "#94A3B8",
-                        fontSize: "1rem",
-                        lineHeight: 1.5,
-                      }}
-                    >
-                      {feature.description}
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
-      <Box sx={{ bgcolor: "#040E1A", py: { xs: 8, md: 12 } }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: "center", mb: { xs: 6, md: 8 } }}>
-            <Typography
-              component="h2"
+            {/* Scroll to top button */}
+            <IconButton
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               sx={{
+                position: "fixed",
+                bottom: 24,
+                right: 24,
+                bgcolor: "#0095ff",
                 color: "white",
-                fontSize: { xs: "2rem", md: "2.5rem" },
-                fontWeight: 600,
-                mb: 2,
+                "&:hover": {
+                  bgcolor: "#0076cc",
+                },
               }}
             >
-              Highlights
-            </Typography>
-            <Typography
-              sx={{
-                color: "#94A3B8",
-                fontSize: { xs: "1rem", md: "1.125rem" },
-                maxWidth: "800px",
-                mx: "auto",
-                lineHeight: 1.6,
-              }}
-            >
-              Explore why our product stands out: adaptability, durability,
-              user-friendly design, and innovation. Enjoy reliable customer
-              support and precision in every detail.
-            </Typography>
-          </Box>
-
-          <Grid container spacing={3}>
-            {highlights.map((highlight, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Box
-                  sx={{
-                    bgcolor: "#0A1929",
-                    p: 4,
-                    borderRadius: 2,
-                    height: "100%",
-                    border: "1px solid rgba(255,255,255,0.1)",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      height: "100%",
-                      gap: 2,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        bgcolor: "rgba(255,255,255,0.1)",
-                        width: 40,
-                        height: 40,
-                        borderRadius: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Icon
-                        icon={highlight.icon}
-                        width={24}
-                        height={24}
-                        color="#94A3B8"
-                      />
-                    </Box>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: "white",
-                        fontSize: { xs: "1.25rem", md: "1.5rem" },
-                        fontWeight: 500,
-                        mb: 1,
-                      }}
-                    >
-                      {highlight.title}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#94A3B8",
-                        fontSize: "1rem",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {highlight.description}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-
-      <Box sx={{ bgcolor: "#04111F", py: { xs: 8, md: 12 } }}>
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: "center", mb: { xs: 6, md: 8 } }}>
-            <Typography
-              component="h2"
-              sx={{
-                color: "white",
-                fontSize: { xs: "2rem", md: "2.5rem" },
-                fontWeight: 600,
-                mb: 2,
-              }}
-            >
-              Pricing
-            </Typography>
-            <Typography
-              sx={{
-                color: "#94A3B8",
-                fontSize: { xs: "1rem", md: "1.125rem" },
-                maxWidth: "800px",
-                mx: "auto",
-                mb: 1,
-              }}
-            >
-              Quickly build an effective pricing table for your potential
-              customers with this layout.
-            </Typography>
-            <Typography
-              sx={{
-                color: "#94A3B8",
-                fontSize: { xs: "1rem", md: "1.125rem" },
-                maxWidth: "800px",
-                mx: "auto",
-              }}
-            >
-              It is built with default Material UI components with little
-              customization.
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" },
-              gap: 3,
-              alignItems: "flex-start",
-            }}
-          >
-            {plans.map((plan) => (
-              <Card
-                key={plan.name}
-                sx={{
-                  bgcolor: plan.recommended ? "#1E293B" : "#0F172A",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: 2,
-                  position: "relative",
-                  overflow: "visible",
-                }}
-              >
-                {plan.recommended && (
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      top: 12,
-                      right: 12,
-                      bgcolor: "rgba(255,255,255,0.1)",
-                      color: "white",
-                      px: 2,
-                      py: 0.5,
-                      borderRadius: 1,
-                      fontSize: "0.875rem",
-                    }}
-                  >
-                    Recommended
-                  </Box>
-                )}
-                <CardContent sx={{ p: 4 }}>
-                  <Typography variant="h6" sx={{ color: "white", mb: 2 }}>
-                    {plan.name}
-                  </Typography>
-                  <Box sx={{ display: "flex", alignItems: "baseline", mb: 3 }}>
-                    <Typography
-                      component="span"
-                      sx={{
-                        color: "white",
-                        fontSize: "2.5rem",
-                        fontWeight: 600,
-                      }}
-                    >
-                      ${plan.price}
-                    </Typography>
-                    <Typography
-                      component="span"
-                      sx={{ color: "#94A3B8", ml: 1 }}
-                    >
-                      per month
-                    </Typography>
-                  </Box>
-                  <Box sx={{ mb: 4 }}>
-                    {plan.features.map((feature) => (
-                      <Box
-                        key={feature}
-                        sx={{ display: "flex", alignItems: "center", mb: 2 }}
-                      >
-                        <Icon
-                          icon="mdi:check-circle"
-                          color="#3B82F6"
-                          width={20}
-                          height={20}
-                        />
-                        <Typography sx={{ color: "#94A3B8", ml: 2 }}>
-                          {feature}
-                        </Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                  <Button
-                    fullWidth
-                    variant={plan.buttonVariant as "contained" | "outlined"}
-                    sx={{
-                      py: 1.5,
-                      ...(plan.buttonVariant === "contained"
-                        ? {
-                            bgcolor: "#3B82F6",
-                            color: "white",
-                            "&:hover": {
-                              bgcolor: "#2563EB",
-                            },
-                          }
-                        : {
-                            borderColor: "rgba(255,255,255,0.1)",
-                            color: "white",
-                            "&:hover": {
-                              borderColor: "rgba(255,255,255,0.2)",
-                            },
-                          }),
-                    }}
-                  >
-                    {plan.buttonText}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+              <Icon icon="mdi:arrow-up" width={24} />
+            </IconButton>
           </Box>
         </Container>
       </Box>
-
-      <Box>
-        <Container
-          maxWidth="md"
-          sx={{ bgcolor: "#121212", color: "white", py: 4 }}
-        >
-          <Typography variant="h4" align="center" gutterBottom sx={{ mb: 4 }}>
-            Frequently asked questions
-          </Typography>
-          <Box>
-            {faqs.map((faq, index) => (
-              <Accordion
-                key={index}
-                sx={{
-                  bgcolor: "#1a1a1a",
-                  color: "white",
-                  borderRadius: 1,
-                  mb: 2,
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMore sx={{ color: "white" }} />}
-                  aria-controls={`panel${index}-content`}
-                  id={`panel${index}-header`}
-                >
-                  <Typography>{faq.question}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>{faq.answer}</Typography>
-                </AccordionDetails>
-              </Accordion>
-            ))}
-          </Box>
-        </Container>
-      </Box>
-
-      <Box sx={{ bgcolor: "#05070A", color: "white", py: 6, mt: 10 }}>
-        <Container maxWidth="lg">
-          <Grid container spacing={4}>
-            {/* Left Section - Newsletter */}
-            <Grid item xs={12} md={6}>
-              <Typography variant="h6" gutterBottom>
-                <Box
-                  component="span"
-                  sx={{ color: "#3B82F6", fontWeight: "bold" }}
-                >
-                  Probz.Ai
-                </Box>
-              </Typography>
-              <Typography variant="subtitle1" gutterBottom>
-                Join the newsletter
-              </Typography>
-              <Typography variant="body2" sx={{ mb: 2 }}>
-                Subscribe for weekly updates. No spams ever!
-              </Typography>
-              <Box
-                component="form"
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  mt: 2,
-                }}
-              >
-                <TextField
-                  variant="outlined"
-                  placeholder="Your email address"
-                  size="small"
-                  fullWidth
-                  sx={{
-                    bgcolor: "#1a1a1a",
-                    "& .MuiOutlinedInput-root": {
-                      color: "white",
-                      borderColor: "white",
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "#3B82F6",
-                    },
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{
-                    bgcolor: "#3B82F6",
-                    "&:hover": {
-                      bgcolor: "#3a9cdc",
-                    },
-                  }}
-                >
-                  Subscribe
-                </Button>
-              </Box>
-            </Grid>
-
-            {/* Right Section - Navigation Links */}
-            <Grid item xs={12} md={6}>
-              <Grid container spacing={4}>
-                {/* Product Links */}
-                <Grid item xs={12} sm={4}>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mb: 1 }}
-                  >
-                    Product
-                  </Typography>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    Features
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    Testimonials
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    Highlights
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    Pricing
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                  >
-                    FAQs
-                  </Link>
-                </Grid>
-
-                {/* Company Links */}
-                <Grid item xs={12} sm={4}>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mb: 1 }}
-                  >
-                    Company
-                  </Typography>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    About us
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    Careers
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                  >
-                    Press
-                  </Link>
-                </Grid>
-
-                {/* Legal Links */}
-                <Grid item xs={12} sm={4}>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ fontWeight: "bold", mb: 1 }}
-                  >
-                    Legal
-                  </Typography>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    Terms
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                    sx={{ mb: 1 }}
-                  >
-                    Privacy
-                  </Link>
-                  <Link
-                    href="#"
-                    underline="hover"
-                    color="inherit"
-                    display="block"
-                  >
-                    Contact
-                  </Link>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-    </Container>
+    </Box>
   );
 }
