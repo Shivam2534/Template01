@@ -238,10 +238,20 @@ export default function Navbar() {
           zIndex: 10,
         }}
       >
-        <Container maxWidth="lg">
+        <Container
+          maxWidth="lg"
+          sx={{
+            px: { xs: 2, sm: 3 }, // Consistent padding across screen sizes
+          }}
+        >
           <AppBar position="static" color="transparent" elevation={0}>
-            {/* <Container maxWidth="xl"> */}
-            <Toolbar disableGutters>
+            <Toolbar
+              disableGutters
+              sx={{
+                pl: 0, // Remove default left padding
+                pr: 0, // Remove default right padding
+              }}
+            >
               {/* Logo - Desktop */}
               <Box
                 sx={{
@@ -265,7 +275,9 @@ export default function Navbar() {
               {/* Mobile menu */}
               <Box
                 sx={{
-                  display: { xs: "flex", md: "none", alignItems: "center" },
+                  display: { xs: "flex", md: "none" },
+                  alignItems: "center",
+                  p: 0, // Remove any padding
                 }}
               >
                 <IconButton
@@ -274,6 +286,10 @@ export default function Navbar() {
                   aria-haspopup="true"
                   onClick={handleOpenNavMenu}
                   color="inherit"
+                  sx={{
+                    p: 0, // Remove padding from icon button
+                    mr: 1, // Add small right margin
+                  }}
                 >
                   <Icon icon="material-symbols:menu" />
                 </IconButton>
@@ -295,6 +311,7 @@ export default function Navbar() {
                     display: { xs: "block", md: "none" },
                   }}
                 >
+                  {/* Menu items remain unchanged */}
                   {pages.map((page) => (
                     <MenuItem
                       key={typeof page === "string" ? page : page.name}
