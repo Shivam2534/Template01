@@ -19,7 +19,6 @@ import u3 from "../../public/u3.svg";
 import u4 from "../../public/u4.svg";
 import u5 from "../../public/u5.svg";
 import Image from "next/image";
-import Link from "next/link";
 function Page() {
   {
     /*
