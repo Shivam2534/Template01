@@ -110,7 +110,7 @@ function Page() {
   return (
     <Box>
       {/* Navigation bar */}
-      <Box sx={{ width: "100%", height: 145 }}>
+      <Box sx={{ width: "100%", height: { xs: 100, md: 145 } }}>
         <Container
           sx={{
             display: "flex",
@@ -411,7 +411,7 @@ function Page() {
         component="footer"
         sx={{
           py: 4,
-          pt:7,
+          pt: 7,
           backgroundColor: "#f9f9f9", // Optional for a light footer background
           borderTop: "1px solid #e0e0e0", // Optional top border for separation
         }}
