@@ -1,499 +1,477 @@
 "use client";
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  useMediaQuery,
-  useTheme,
-  Grid,
-  IconButton,
-  Stack,
-  Divider,
-} from "@mui/material";
-import { Icon } from "@iconify/react";
-import { useState } from "react";
-import u1 from "../../public/u1.svg";
-import u2 from "../../public/u2.svg";
-import u3 from "../../public/u3.svg";
-import u4 from "../../public/u4.svg";
-import u5 from "../../public/u5.svg";
+import { Container, Box, Typography, Button, Stack, Grid } from "@mui/material";
 import Image from "next/image";
+import voidLogo from "../../public/voidLogo.png";
+import c1 from "../../public/c1.png";
+import c2 from "../../public/c2.png";
+import c3 from "../../public/c3.png";
+import { Icon } from "@iconify/react";
+
 function Page() {
-  {
-    /*
-     ******************************************
-     *        CODE OF NAVIGATION BAR          *
-     ******************************************
-     */
-  }
   const menuBar = [
     {
-      desktopName: "Features",
-      mobileName: "Features",
+      desktopName: "Discord",
     },
     {
-      desktopName: "Kart Chat",
-      mobileName: "Chat",
-    },
-    {
-      desktopName: "Privacy Policy",
-      mobileName: "Privacy Policy",
-    },
-    {
-      desktopName: "Documentation",
-      mobileName: "Documentation",
-    },
-    {
-      mobileName: "Sign in",
+      desktopName: "GitHub",
     },
   ];
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const ToggleMenuOnMobile = () => {
-    setIsMobileMenuOpen((prev) => !prev);
-  };
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const directToClickedTag = () => {
-    setIsMobileMenuOpen(false);
-  };
-  {
-    /*
-     ******************************************
-     *        CODE OF SECTION-1               *
-     ******************************************
-     */
-  }
-  const sponserNames = [
-    { imgURL: u1 },
-    { imgURL: u2 },
-    { imgURL: u3 },
-    { imgURL: u4 },
-    { imgURL: u5 },
-  ];
-  {
-    /*
-     ******************************************
-     *        CODE OF SECTION-2               *
-     ******************************************
-     */
-  }
-  const aiAgents = [
+
+  const shortcutsWithImage = [
     {
-      agentName: "AI Sales Agents",
-      agentIcon: <Icon icon="mdi:cellphone" />,
-      describtion:
-        " Our AI agents are trained emulate the behavior of your sales team. Sales agents are not a one-type-fits-all. We allow for advanced customization for personality, tone, and more.",
+      shortcut: "Tab",
+      des: "Press 'Tab' to apply autocomplete.",
+      img: c1,
     },
     {
-      agentName: "Sector Specific Reranker ",
-      agentIcon: <Icon icon="mdi:alarm" />,
-      describtion:
-        "Our Reranker aims to predict what products each user is more likely to purchase. These models are trained individually for each store with advanced low latency technology.",
+      shortcut: "Ctrl + K",
+      des: "Edit your selection inline.",
+      img: c2,
     },
     {
-      agentName: "Granular Personalization ",
-      agentIcon: <Icon icon="mdi:code-braces" />,
-      describtion:
-        "We train Large AI models to customize the information shown to each user. We adjust product recommendations, FAQs, and the layout of your website for each user.",
+      shortcut: "Ctrl + L",
+      des: "Ask questions and include files.",
+      img: c3,
     },
   ];
-  {
-    /*
-     ******************************************
-     *           CODE OF FOOTER               *
-     ******************************************
-     */
-  }
-  const navItems = ["Features", "Kart Chat", "Book a Demo", "Twitter"];
 
   return (
     <Box>
       {/* Navigation bar */}
-      <Box sx={{ width: "100%", height: { xs: 100, md: 145 } }}>
+      <Box
+        sx={{
+          width: "100%",
+          height: 100,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Container
+          maxWidth={false}
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            height: "100%",
-          }}
-        >
-          {/* Left section */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              KART AI
-            </Typography>
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex", justifyContent: "center" },
-                gap: 2,
-              }}
-            >
-              {menuBar.map((item, ind) => (
-                <Button
-                  key={ind}
-                  sx={{ color: "black", textTransform: "none", fontSize: 16 }}
-                >
-                  {item.desktopName}
-                </Button>
-              ))}
-            </Box>
-          </Box>
-
-          {/* Right section */}
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "black",
-              color: "white",
-              textTransform: "none",
-              display: { xs: "none", md: "block" },
-            }}
-          >
-            Get started
-          </Button>
-          <Box
-            sx={{
-              display: { xs: "block", md: "none" },
-              cursor: "pointer",
-              border: isMobileMenuOpen ? "2px solid black" : "none",
-              padding: isMobileMenuOpen ? "4px" : "0",
-              borderRadius: "8px", // Optional for rounded corners
-              transition: "all 0.3s ease", // Smooth transition for border and padding
-            }}
-            onClick={ToggleMenuOnMobile}
-          >
-            <Icon
-              icon={isMobileMenuOpen ? "mdi:close" : "mdi:menu"}
-              style={{ fontSize: "24px" }}
-            />
-          </Box>
-
-          {/* Mobile Menu */}
-          <Box
-            sx={{
-              display: isMobileMenuOpen && isSmallScreen ? "flex" : "none",
-              flexDirection: "column",
-              position: "absolute",
-              top: "27%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: isSmallScreen ? "80%" : "50%",
-              backgroundColor: "#FFFFFF",
-              padding: 2,
-              borderRadius: 2,
-              boxShadow: 3,
-            }}
-          >
-            {menuBar.map((MenuItem, ind) => (
-              <Button key={ind} onClick={directToClickedTag}>
-                {MenuItem.mobileName}
-              </Button>
-            ))}
-          </Box>
-        </Container>
-      </Box>
-
-      {/* CODE OF SECTION-1 */}
-      <Box sx={{ py: 8 }}>
-        <Container
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: 530,
+            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
+            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
+            maxWidth: "xl",
+            margin: "0 auto",
           }}
         >
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
+              justifyContent: "space-between",
               alignItems: "center",
-              px: 2, // Add horizontal padding for small screens
+              backgroundColor: "white",
+              px: 2,
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+              borderRadius: 2,
+              height: 52,
             }}
           >
-            {/* Main Heading */}
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                textAlign: "center", // Consistent alignment across screen sizes
-                fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3rem" }, // Responsive font size
-              }}
-            >
-              AI-powered
-            </Typography>
-
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 700,
-                textAlign: "center",
-                fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3rem" }, // Responsive font size
-              }}
-            >
-              <Box component="span" sx={{ color: "#1E40AF" }}>
-                personalization agents
-              </Box>{" "}
-              trained for
-            </Typography>
-
-            <Typography
-              variant="h3"
-              sx={{
-                textAlign: "center",
-                fontSize: { xs: "1.8rem", sm: "2.4rem", md: "3rem" }, // Responsive font size
-                mb: 2,
-              }}
-            >
-              your store.
-            </Typography>
-
-            {/* Supporting Text */}
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#334155",
-                mb: 4,
-                textAlign: "center",
-                px: { xs: 2, sm: 4 }, // Add padding for better spacing on small screens
-              }}
-            >
-              Every customer is unique. Your store should adapt to each one.
-            </Typography>
-
-            {/* CTA Button */}
-            <Box sx={{ textAlign: "center" }}>
-              <Button
-                variant="contained"
+            {/* Left section */}
+            <Box sx={{ display: "flex", gap: 4 }}>
+              <Box
                 sx={{
-                  backgroundColor: "black",
-                  color: "white",
-                  "&:hover": { backgroundColor: "#333" },
-                  borderRadius: 10,
-                  px: 4, // Add padding for a better button size
-                  py: 1.5,
+                  display: "flex",
+                  gap: 1,
+                  justifyItems: "center",
+                  alignItems: "center",
                 }}
               >
-                Book a demo
-              </Button>
-            </Box>
-          </Box>
-
-          {/* Sponsor Section */}
-          <Grid item xs={12} md={6} sx={{ marginTop: "auto" }}>
-            <Grid container spacing={1} justifyContent="center">
-              {sponserNames.map((sponser, ind) => (
-                <Grid
-                  item
-                  xs={4}
-                  sm={2}
-                  key={ind}
+                <Image
+                  src={voidLogo.src}
+                  alt="Void Logo"
+                  width={45}
+                  height={45}
+                />
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: "bolder", fontSize: 27, mb: 1 }}
+                >
+                  Void
+                </Typography>
+                <Button
                   sx={{
-                    display: "flex",
-                    justifyContent: "center",
+                    color: "black",
+                    textTransform: "none",
+                    ml: 3,
+                    fontSize: { xs: 15, md: 18 },
                   }}
                 >
-                  <Image
-                    src={sponser.imgURL}
-                    alt={`Sponsor ${ind}`}
-                    width={100}
-                    height={50}
-                    layout="intrinsic"
-                    quality={85} // Optimize image quality
-                    loading="lazy" // Lazy load images for better performance
-                  />
+                  Waitlist
+                </Button>
+              </Box>
+            </Box>
+
+            {/* Right section */}
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 2,
+                }}
+              >
+                {menuBar.map((item, ind) => (
+                  <Button
+                    key={ind}
+                    sx={{
+                      color: "black",
+                      textTransform: "none",
+                      fontSize: { xs: 15, md: 18 },
+                    }}
+                  >
+                    {item.desktopName}
+                  </Button>
+                ))}
+              </Box>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Code Of Section-1 */}
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          position: "relative",
+          overflow: "hidden",
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "40%",
+            background:
+              "linear-gradient(to top, rgba(0,0,0,0.04), transparent)",
+            pointerEvents: "none",
+          },
+        }}
+      >
+        <Container
+          maxWidth={false}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
+            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
+            maxWidth: "xl",
+            gap: 15,
+          }}
+        >
+          <Stack
+            spacing={4}
+            alignItems="center"
+            sx={{
+              textAlign: "center",
+              position: "relative",
+              p: 6,
+              boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
+              borderRadius: 2,
+            }}
+          >
+            {/* Cube Logo */}
+            <Box
+              sx={{
+                width: { xs: 170, sm: 200 },
+                height: { xs: 170, sm: 200 },
+                position: "relative",
+                mb: { xs: 4, sm: 6 },
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                },
+              }}
+            >
+              <Image
+                src={voidLogo}
+                alt="Void Logo"
+                width={120}
+                height={120}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
+
+            {/* Heading */}
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4rem" },
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.2,
+                mb: { xs: 2, sm: 3 },
+              }}
+            >
+              The open source
+              <br />
+              AI code editor.
+            </Typography>
+
+            {/* Subtitle */}
+            <Typography
+              variant="h2"
+              sx={{
+                fontSize: { xs: "1rem", sm: "1.25rem" },
+                color: "text.secondary",
+                maxWidth: "600px",
+                mb: { xs: 4, sm: 6 },
+                fontWeight: "normal",
+              }}
+            >
+              Void is an open source Cursor alternative. Write code with the
+              best AI tools, use any model, and retain full control over your
+              data.
+            </Typography>
+
+            {/* Buttons */}
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={{ xs: 2, sm: 3 }}
+              sx={{ mb: { xs: 6, sm: 8 } }}
+            >
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={<Icon icon="mdi:github" />}
+                sx={{
+                  borderRadius: "50px",
+                  px: 4,
+                  py: 1.5,
+                  fontSize: "1.1rem",
+                  backgroundColor: "#3A72ED",
+                  "&:hover": {
+                    backgroundColor: "#1a1e21",
+                  },
+                  boxShadow: "0 4px 14px 0 rgba(0,0,0,0.1)",
+                }}
+              >
+                Star on Github
+              </Button>
+              <Button
+                variant="contained"
+                size="large"
+                endIcon={<Icon icon="mdi:arrow-right" />}
+                sx={{
+                  borderRadius: "50px",
+                  px: 4,
+                  py: 1.5,
+                  fontSize: "1.1rem",
+                  backgroundColor: "#5D6672",
+                  "&:hover": {
+                    backgroundColor: "#555",
+                  },
+                  boxShadow: "0 4px 14px 0 rgba(0,0,0,0.1)",
+                }}
+              >
+                Get Access
+              </Button>
+            </Stack>
+
+            {/* Y Combinator Badge */}
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              sx={{
+                color: "text.secondary",
+                opacity: 0.8,
+              }}
+            >
+              <Typography variant="body2">Backed by</Typography>
+              <Box>
+                <Box
+                  sx={{
+                    color: "white",
+                    backgroundColor: "#FB651E",
+                    px: 1,
+                    py: 0.5,
+                    fontSize: "0.875rem",
+                    fontWeight: "bold",
+                  }}
+                  component="span"
+                >
+                  Y
+                </Box>{" "}
+                <Box sx={{ color: "#FB651E" }} component="span">
+                  Combinator
+                </Box>
+              </Box>
+            </Stack>
+          </Stack>
+
+          <Stack
+            spacing={{ xs: 4, sm: 6, md: 8 }}
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              textAlign: "center",
+              position: "relative",
+              p: { xs: 2, sm: 4, md: 6, lg: 8 },
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+              borderRadius: 2,
+            }}
+          >
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
+                fontWeight: 900,
+                letterSpacing: "-0.02em",
+                lineHeight: 1.2,
+                mb: { xs: 2, sm: 3, md: 4 },
+              }}
+            >
+              The AI Features You Love.
+            </Typography>
+
+            <Grid
+              container
+              spacing={{ xs: 3, sm: 4, md: 5 }}
+              justifyContent="center"
+              alignItems="stretch"
+            >
+              {shortcutsWithImage.map((item, ind) => (
+                <Grid item key={ind} xs={12} sm={6} md={4} lg={4}>
+                  <Stack
+                    spacing={2}
+                    alignItems="center"
+                    sx={{
+                      height: "100%",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: { xs: "1.2rem", sm: "1.3rem", md: "1.4rem" },
+                      }}
+                    >
+                      {item.shortcut}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        width: "100%",
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                        flexGrow: 1,
+                      }}
+                    >
+                      {item.des}
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: "100%",
+                        paddingTop: "75%", // 4:3 aspect ratio
+                        position: "relative",
+                        borderRadius: 2,
+                        overflow: "hidden",
+                      }}
+                    >
+                      <Image
+                        src={item.img}
+                        alt={`${item.shortcut} image`}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                    </Box>
+                  </Stack>
                 </Grid>
               ))}
             </Grid>
-          </Grid>
-        </Container>
-      </Box>
+          </Stack>
 
-      {/* CODE OF SECTION-2 */}
-      <Box
-        sx={{
-          py: 4,
-          background: "linear-gradient(to left, #FFFFFF, #E7E9EC)",
-        }}
-      >
-        <Container>
-          {/* Heading Section */}
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 700,
-                  textAlign: { md: "center" }, // Center-align for better visual appeal
-                  mb: 2,
-                  fontSize: 30, // Responsive font size
-                }}
-              >
-                Personalization agents for{" "}
-                <Box component="span" sx={{ color: "#4F46E5" }}>
-                  your business
-                </Box>
-                <Typography
-                  sx={{
-                    color: "#495360",
-                    textAlign: { md: "center" },
-                    fontSize: 18,
-                    mt: 3,
-                  }}
-                >
-                  We train large AI models to personalize your store for each
-                  and every customer. Bring the future of retail to your
-                  business today.
-                </Typography>
-              </Typography>
-            </Grid>
-          </Grid>
-
-          {/* AI Agents Section */}
-          <Grid
-            container
-            spacing={3}
+          <Stack
+            spacing={4}
+            alignItems="center"
+            justifyContent="center"
             sx={{
-              mt: 10,
+              textAlign: "center",
+              position: "relative",
+              p: 2,
+              pt: 7,
+              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
+              borderRadius: 2,
             }}
           >
-            {aiAgents.map((agent, ind) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                key={ind}
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  textAlign: "left",
-                  gap: 2,
-                  px: 2,
-                }}
-              >
-                {/* Agent Details */}
-                <Box sx={{ display: "flex", gap: 2 }}>
-                  <Box sx={{ fontSize: 20, color: "#4F46E5" }}>
-                    {agent.agentIcon}
-                  </Box>
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      fontWeight: 600,
-                      fontSize: 15,
-                    }}
-                  >
-                    {agent.agentName}
-
-                    <Typography
-                      component="span"
-                      sx={{
-                        color: "#6B7280", // A softer gray for descriptions
-                        fontSize: 15,
-                      }}
-                    >
-                      {agent.describtion}
-                    </Typography>
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* CODE OF FOOTER*/}
-      <Box
-        component="footer"
-        sx={{
-          py: 4,
-          pt: 7,
-          backgroundColor: "#f9f9f9", // Optional for a light footer background
-          borderTop: "1px solid #e0e0e0", // Optional top border for separation
-        }}
-      >
-        <Container maxWidth="lg">
-          <Stack spacing={4} alignItems="center">
-            {/* Logo */}
+            {/* Heading */}
             <Typography
-              variant="h6"
-              component="div"
+              variant="h2"
               sx={{
-                fontWeight: 600,
-                letterSpacing: 1,
-                textAlign: "center",
+                fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
               }}
             >
-              KART AI
+              Powered by VS Code.
             </Typography>
 
-            {/* Navigation */}
+            {/* Description */}
+            <Typography
+              variant="h3"
+              sx={{
+                fontSize: { xs: "1rem", sm: "1.25rem" },
+                color: "text.secondary",
+                maxWidth: "600px",
+                fontWeight: "normal",
+              }}
+            >
+              Void is a fork of VS Code. We let you transfer over all your
+              themes, keybinds, and settings in one click.
+            </Typography>
+
+            {/* Logos */}
             <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={{ xs: 2, sm: 4 }}
+              direction="row"
+              spacing={3}
               alignItems="center"
               justifyContent="center"
+              sx={{ mt: 4 }}
             >
-              {navItems.map((item) => (
-                <Typography
-                  key={item}
-                  component="a"
-                  href="#"
-                  sx={{
-                    color: "text.primary",
-                    textDecoration: "none",
-                    fontWeight: 500,
-                    fontSize: "0.9rem",
-                    "&:hover": { color: "primary.main" },
-                  }}
-                >
-                  {item}
-                </Typography>
-              ))}
-            </Stack>
-
-            {/* Bottom Section */}
-            <Divider
-              sx={{ width: "100%", borderColor: "divider", borderWidth: "1px" }}
-            />
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              justifyContent="space-between"
-              alignItems="center"
-              spacing={2}
-              width="100%"
-            >
-              {/* Copyright */}
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ textAlign: "center" }}
+              {/* VS Code Logo */}
+              <Box
+                sx={{ width: { xs: 48, sm: 64 }, height: { xs: 48, sm: 64 } }}
               >
-                Copyright © {new Date().getFullYear()} Kart. All rights
-                reserved.
-              </Typography>
+                <Icon
+                  icon="vscode-icons:file-type-vscode"
+                  width="100%"
+                  height="100%"
+                />
+              </Box>
 
-              {/* Social Icons */}
-              <Stack direction="row" spacing={2}>
-                <IconButton
-                  href="#"
-                  aria-label="Twitter"
-                  sx={{ color: "text.secondary" }}
-                >
-                  <Icon icon="mdi:twitter" width={20} />
-                </IconButton>
-                <IconButton
-                  href="#"
-                  aria-label="LinkedIn"
-                  sx={{ color: "text.secondary" }}
-                >
-                  <Icon icon="mdi:linkedin" width={20} />
-                </IconButton>
-              </Stack>
+              {/* Bidirectional Arrow */}
+              <Icon
+                icon="mdi:arrow-left-right"
+                width={24}
+                height={24}
+                style={{ opacity: 0.5 }}
+              />
+
+              {/* Void Logo (Cube) */}
+              <Box
+                sx={{
+                  width: { xs: 48, sm: 64 },
+                  height: { xs: 48, sm: 64 },
+                  position: "relative",
+                }}
+              >
+                <Image
+                  src={voidLogo}
+                  alt="Void Logo"
+                  width={64}
+                  height={64}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              </Box>
             </Stack>
           </Stack>
         </Container>
