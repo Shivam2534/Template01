@@ -368,7 +368,6 @@ function Page() {
                 fontWeight: 900,
                 letterSpacing: "-0.02em",
                 lineHeight: 1.2,
-                mb: { xs: 2, sm: 3, md: 4 },
               }}
             >
               The AI Features You Love.
@@ -390,7 +389,7 @@ function Page() {
                   sx={{
                     display: "flex",
                     justifyContent: "center",
-                    mt: { xs: 8 },
+                    mt: { xs: 5 },
                   }}
                 >
                   <Stack
@@ -407,7 +406,7 @@ function Page() {
                       variant="h5"
                       sx={{
                         fontWeight: 600,
-                        fontSize: { xs: "1.2rem", sm: "1.3rem", md: "1.4rem" },
+                        fontSize: { xs: "1.4rem", sm: "1.3rem", md: "1.4rem" },
                       }}
                     >
                       {item.shortcut}
@@ -657,15 +656,21 @@ function Page() {
           <Stack
             spacing={4}
             alignItems="center"
+            justifyItems="center"
             sx={{
-              textAlign: "center",
               position: "relative",
-              p: 6,
               boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
               borderRadius: 2,
+              p: 3,
             }}
           >
-            <Box sx={{ textAlign: "center" }}>
+            <Box
+              sx={{
+                textAlign: "center",
+                width: "100%",
+                p: { xs: 2, sm: 6 },
+              }}
+            >
               <Typography
                 component="h2"
                 sx={{
@@ -691,7 +696,12 @@ function Page() {
             </Box>
 
             {/* Cards Grid */}
-            <Grid container spacing={4}>
+            <Grid
+              spacing={{ xs: 0, sm: 2 }}
+              rowSpacing={{ xs: 3 }}
+              container
+              sx={{ width: "100%", p: { sm: 1 } }}
+            >
               {LLMmodels.map((model, index) => (
                 <Grid item xs={12} md={6} key={index}>
                   <Paper
