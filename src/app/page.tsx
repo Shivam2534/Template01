@@ -134,7 +134,7 @@ function Page() {
                   sx={{
                     color: "black",
                     textTransform: "none",
-                    ml: 3,
+                    ml: { xs: 2, sm: 3 },
                     fontSize: { xs: 15, md: 18 },
                   }}
                 >
