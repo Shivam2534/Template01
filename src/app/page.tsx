@@ -1,5 +1,13 @@
 "use client";
-import { Container, Box, Typography, Button, Stack, Grid } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Stack,
+  Grid,
+  Paper,
+} from "@mui/material";
 import Image from "next/image";
 import voidLogo from "../../public/voidLogo.png";
 import c1 from "../../public/c1.png";
@@ -32,6 +40,35 @@ function Page() {
       shortcut: "Ctrl + L",
       des: "Ask questions and include files.",
       img: c3,
+    },
+    {
+      shortcut: "Ctrl + L",
+      des: "Ask questions and include files.",
+      img: c3,
+    },
+  ];
+
+  const LLMmodels = [
+    {
+      Heading: "Host Locally",
+      CompanyImg: [
+        { companyIcon: '<Icon icon="devicon:google" />' },
+        { companyIcon: '<Icon icon="logos:microsoft-icon" />' },
+        { companyIcon: '<Icon icon="arcticons:openai-chatgpt" />' },
+      ],
+      subHeading1: "Never run out of API credits again. We offer",
+      subHeading2: "tools like Ollama to host quality models locally.",
+      overlapOrGap: true,
+    },
+    {
+      Heading: "Host Locally",
+      CompanyImg: [
+        { companyIcon: '<Icon icon="devicon:google" />' },
+        { companyIcon: '<Icon icon="logos:microsoft-icon" />' },
+      ],
+      subHeading1: "Send direct to Claude, GPT, or Gemini. Unlike other",
+      subHeading2: "editors, we don't act as a middleman to your LLM calls.",
+      overlapOrGap: false,
     },
   ];
 
@@ -137,6 +174,7 @@ function Page() {
           alignItems: "center",
           position: "relative",
           overflow: "hidden",
+          pb: 10,
           "&::after": {
             content: '""',
             position: "absolute",
@@ -144,8 +182,6 @@ function Page() {
             left: 0,
             right: 0,
             height: "40%",
-            background:
-              "linear-gradient(to top, rgba(0,0,0,0.04), transparent)",
             pointerEvents: "none",
           },
         }}
@@ -476,6 +512,332 @@ function Page() {
           </Stack>
         </Container>
       </Box>
+
+      {/* Code Of Section-2 */}
+      <Box
+        sx={{
+          position: "relative",
+          bgcolor: "#E2E8F0",
+          overflow: "hidden",
+          pt: { xs: 8, md: 12 },
+          pb: { xs: 10, md: 16 },
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            width: "100%",
+            height: { xs: "30px", sm: "40px", md: "50px" },
+            bgcolor: "white",
+            borderRadius: "0 0 50% 50%",
+          }}
+        />
+
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: "center", mb: { xs: 4, md: 6 } }}>
+            <Typography
+              variant="h2"
+              component="h2"
+              gutterBottom
+              sx={{
+                fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+                fontWeight: 700,
+              }}
+            >
+              Community Features.
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
+                color: "text.secondary",
+                maxWidth: "800px",
+                mx: "auto",
+              }}
+            >
+              Anyone can advance our Roadmap or build their own AI integration.
+            </Typography>
+          </Box>
+
+          <Grid container spacing={4}>
+            {shortcutsWithImage.map((item, index) => (
+              <Grid item xs={12} sm={6} md={6} key={index}>
+                <Box
+                  sx={{
+                    textAlign: "center",
+                    p: 2,
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    bgcolor: "#E2E8F0",
+                    transition: "all 0.3s ease-in-out",
+                    "&:hover": {
+                      transform: "translateY(-5px)",
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{ fontWeight: 600 }}
+                  >
+                    {item.shortcut}
+                  </Typography>
+                  <Box
+                    sx={{
+                      position: "relative",
+                      width: "100%",
+                      pt: "56.25%",
+                    }}
+                  >
+                    <Image
+                      src={item.img}
+                      alt={item.shortcut}
+                      layout="fill"
+                      objectFit="cover"
+                      style={{ borderRadius: 10 }}
+                    />
+                  </Box>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+
+        <Box
+          sx={{
+            position: "absolute",
+            left: 0,
+            bottom: 0,
+            borderRadius: "40% 40% 0 0",
+            width: "100%",
+            height: { xs: "30px", sm: "40px", md: "50px" },
+            bgcolor: "white",
+          }}
+        />
+      </Box>
+
+      {/* Code Of Section-3 */}
+      <Box sx={{ pt: 10 }}>
+        <Container
+          maxWidth={false}
+          sx={{
+            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
+            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
+            maxWidth: "xl",
+            margin: "0 auto",
+          }}
+        >
+          <Stack
+            spacing={4}
+            alignItems="center"
+            sx={{
+              textAlign: "center",
+              position: "relative",
+              p: 6,
+              boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
+              borderRadius: 2,
+            }}
+          >
+            <Box sx={{ textAlign: "center" }}>
+              <Typography
+                component="h2"
+                sx={{
+                  fontSize: { xs: "2.5rem", sm: "3rem", md: "3.5rem" },
+                  fontWeight: 800,
+                  mb: 2,
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                Any LLM, Anywhere.
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                  color: "text.secondary",
+                  maxWidth: "600px",
+                  mx: "auto",
+                }}
+              >
+                Host your own models locally, or communicate directly with your
+                favorites.
+              </Typography>
+            </Box>
+
+            {/* Cards Grid */}
+            <Grid container spacing={4}>
+              {LLMmodels.map((model, index) => (
+                <Grid item xs={12} md={6} key={index}>
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: { xs: 3, sm: 4 },
+                      height: "100%",
+                      bgcolor: "#E5E7EB",
+                      borderRadius: 2,
+                    }}
+                  >
+                    <Box sx={{ mb: 3 }}>
+                      <Typography
+                        component="h3"
+                        sx={{
+                          fontSize: { xs: "1.5rem", sm: "1.75rem" },
+                          fontWeight: 700,
+                          mb: 3,
+                          textAlign: "center",
+                        }}
+                      >
+                        {model.Heading}
+                      </Typography>
+
+                      {/* Company Icons */}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          mb: 3,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            backgroundColor: "#E5E7EB",
+                          }}
+                        >
+                          {model.CompanyImg.map((company, idx) => (
+                            <Box
+                              key={idx}
+                              sx={{
+                                ml: model.overlapOrGap
+                                  ? idx === 0
+                                    ? 0
+                                    : -0.6 // Overlap
+                                  : idx === 0
+                                  ? 0
+                                  : 1, // Gap
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                p: 1,
+                                width: 60,
+                                height: 60,
+                                borderRadius: 2,
+                                boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
+                                backgroundColor: "white",
+                              }}
+                            >
+                              <Icon
+                                icon={company.companyIcon.replace(
+                                  /<Icon icon="|" \/>/g,
+                                  ""
+                                )}
+                                style={{
+                                  opacity: 0.8,
+                                  fontSize: 100, // Controls size
+                                }}
+                              />
+                            </Box>
+                          ))}
+                        </Box>
+                      </Box>
+
+                      {/* Description */}
+                      <Typography
+                        sx={{
+                          textAlign: "center",
+                          color: "text.secondary",
+                          fontSize: { xs: "0.9rem", sm: "1rem" },
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        <Typography>{model.subHeading1}</Typography>
+                        <Typography>{model.subHeading2}</Typography>
+                      </Typography>
+                    </Box>
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          </Stack>
+        </Container>
+      </Box>
+
+      {/* Code Of Section-4 */}
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
+        <Box
+          sx={{
+            bgcolor: "#1a1f2e",
+            borderRadius: 4,
+            p: { xs: 10, sm: 18, md: 20 },
+            textAlign: "center",
+            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.15)",
+          }}
+        >
+          <Stack spacing={4} alignItems="center">
+            <Typography
+              variant="h2"
+              sx={{
+                fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+                fontWeight: 700,
+                color: "white",
+                mb: { xs: 3, md: 4 },
+              }}
+            >
+              Get Started with Void.
+            </Typography>
+
+            <Stack spacing={2} sx={{ width: "100%", maxWidth: 280 }}>
+              <Button
+                variant="contained"
+                size="large"
+                startIcon={
+                  <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                    <Icon icon="mdi:github" />
+                  </Box>
+                }
+                sx={{
+                  bgcolor: "#3b82f6",
+                  fontSize: "1rem",
+                  py: 1.5,
+                  borderRadius: 50,
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "#2563eb",
+                  },
+                }}
+              >
+                Star on Github
+              </Button>
+
+              <Button
+                variant="contained"
+                size="large"
+                endIcon={
+                  <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                    <Icon icon="mdi:arrow-top-right" />
+                  </Box>
+                }
+                sx={{
+                  bgcolor: "rgba(255, 255, 255, 0.1)",
+                  fontSize: "1rem",
+                  py: 1.5,
+                  borderRadius: 50,
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "rgba(255, 255, 255, 0.15)",
+                  },
+                }}
+              >
+                Get Access
+              </Button>
+            </Stack>
+          </Stack>
+        </Box>
+      </Container>
     </Box>
   );
 }
