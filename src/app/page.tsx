@@ -284,7 +284,7 @@ function Page() {
                 startIcon={<Icon icon="mdi:github" />}
                 sx={{
                   borderRadius: "50px",
-                  px: 4,
+                  px: { xs: 2, sm: 4 },
                   py: 1.5,
                   fontSize: "1.1rem",
                   backgroundColor: "#3A72ED",
@@ -302,7 +302,7 @@ function Page() {
                 endIcon={<Icon icon="mdi:arrow-right" />}
                 sx={{
                   borderRadius: "50px",
-                  px: 4,
+                  px: { xs: 2, sm: 4 },
                   py: 1.5,
                   fontSize: "1.1rem",
                   backgroundColor: "#5D6672",
