@@ -14,14 +14,17 @@ import c1 from "../../public/c1.png";
 import c2 from "../../public/c2.png";
 import c3 from "../../public/c3.png";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 function Page() {
   const menuBar = [
     {
       desktopName: "Discord",
+      onMobile: true,
     },
     {
       desktopName: "GitHub",
+      onMobile: false,
     },
   ];
 
@@ -155,6 +158,10 @@ function Page() {
                       color: "black",
                       textTransform: "none",
                       fontSize: { xs: 15, md: 18 },
+                      display: {
+                        xs: item.onMobile === false ? "none" : "block",
+                        sm: "block",
+                      },
                     }}
                   >
                     {item.desktopName}
@@ -767,77 +774,173 @@ function Page() {
       </Box>
 
       {/* Code Of Section-4 */}
-      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
-        <Box
+      <Box sx={{ my: 15 }}>
+        <Container
+          maxWidth={false}
           sx={{
-            bgcolor: "#1a1f2e",
-            borderRadius: 4,
-            p: { xs: 10, sm: 18, md: 20 },
-            textAlign: "center",
-            boxShadow: "0 4px 24px rgba(0, 0, 0, 0.15)",
+            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
+            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
+            maxWidth: "xl",
+            margin: "0 auto",
           }}
         >
-          <Stack spacing={4} alignItems="center">
+          <Box
+            sx={{
+              bgcolor: "#1a1f2e",
+              borderRadius: 4,
+              p: { xs: 10, sm: 18, md: 20 },
+              textAlign: "center",
+              boxShadow: "0 4px 24px rgba(0, 0, 0, 0.15)",
+            }}
+          >
+            <Stack spacing={4} alignItems="center">
+              <Typography
+                variant="h2"
+                sx={{
+                  fontSize: { xs: "1rem", sm: "1.5rem", md: "2rem" },
+                  fontWeight: 700,
+                  color: "white",
+                  mb: { xs: 3, md: 4 },
+                }}
+              >
+                Get Started with Void.
+              </Typography>
+
+              <Stack spacing={2} sx={{ width: "100%", maxWidth: 280 }}>
+                <Button
+                  variant="contained"
+                  size="large"
+                  startIcon={
+                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                      <Icon icon="mdi:github" />
+                    </Box>
+                  }
+                  sx={{
+                    bgcolor: "#3b82f6",
+                    fontSize: "1rem",
+                    py: 1.5,
+                    borderRadius: 50,
+                    textTransform: "none",
+                    "&:hover": {
+                      bgcolor: "#2563eb",
+                    },
+                  }}
+                >
+                  Star on Github
+                </Button>
+
+                <Button
+                  variant="contained"
+                  size="large"
+                  endIcon={
+                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                      <Icon icon="mdi:arrow-top-right" />
+                    </Box>
+                  }
+                  sx={{
+                    bgcolor: "rgba(255, 255, 255, 0.1)",
+                    fontSize: "1rem",
+                    py: 1.5,
+                    borderRadius: 50,
+                    textTransform: "none",
+                    "&:hover": {
+                      bgcolor: "rgba(255, 255, 255, 0.15)",
+                    },
+                  }}
+                >
+                  Get Access
+                </Button>
+              </Stack>
+            </Stack>
+          </Box>
+        </Container>
+      </Box>
+
+      <Box
+        component="footer"
+        sx={{
+          borderTop: "1px solid",
+          borderColor: "divider",
+          bgcolor: "background.paper",
+        }}
+      >
+        <Container
+          maxWidth={false}
+          sx={{
+            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
+            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
+            maxWidth: "xl",
+            margin: "0 auto",
+          }}
+        >
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 2, sm: 0 }}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            {/* Copyright */}
             <Typography
-              variant="h2"
+              variant="body2"
+              color="text.secondary"
               sx={{
-                fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
-                fontWeight: 700,
-                color: "white",
-                mb: { xs: 3, md: 4 },
+                order: { xs: 2, sm: 1 },
+                textAlign: { xs: "center", sm: "left" },
               }}
             >
-              Get Started with Void.
+              © 2024 Glass Devtools, Inc. - All rights reserved.
             </Typography>
 
-            <Stack spacing={2} sx={{ width: "100%", maxWidth: 280 }}>
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={
-                  <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                    <Icon icon="mdi:github" />
-                  </Box>
-                }
-                sx={{
-                  bgcolor: "#3b82f6",
-                  fontSize: "1rem",
-                  py: 1.5,
-                  borderRadius: 50,
-                  textTransform: "none",
-                  "&:hover": {
-                    bgcolor: "#2563eb",
-                  },
+            {/* Logo */}
+            <Box
+              sx={{
+                order: { xs: 1, sm: 2 },
+                position: "relative",
+                width: 60, // Set the box dimensions (if needed)
+                height: 60, // Adjust as per your requirement
+              }}
+            >
+              <Image
+                src={voidLogo}
+                alt="Glass Devtools Logo"
+                width={60} // Set image width independently
+                height={60} // Set image height independently
+                style={{
+                  objectFit: "contain", // Ensures the image fits inside its box without distortion
                 }}
-              >
-                Star on Github
-              </Button>
+              />
+            </Box>
 
-              <Button
-                variant="contained"
-                size="large"
-                endIcon={
-                  <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                    <Icon icon="mdi:arrow-top-right" />
-                  </Box>
-                }
-                sx={{
-                  bgcolor: "rgba(255, 255, 255, 0.1)",
-                  fontSize: "1rem",
-                  py: 1.5,
-                  borderRadius: 50,
-                  textTransform: "none",
-                  "&:hover": {
-                    bgcolor: "rgba(255, 255, 255, 0.15)",
-                  },
-                }}
+            {/* Contact Links */}
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              sx={{
+                order: { xs: 3, sm: 3 },
+              }}
+            >
+              <Link
+                href="https://discord.com"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                Get Access
-              </Button>
+                <Icon icon="mdi:discord" width={24} height={24} />
+              </Link>
+              <Link
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon icon="mdi:github" width={24} height={24} />
+              </Link>
+              <Link href="mailto:hello@voideditor.com">
+                hello@voideditor.com
+              </Link>
             </Stack>
           </Stack>
-        </Box>
-      </Container>
+        </Container>
+      </Box>
     </Box>
   );
 }
