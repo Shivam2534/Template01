@@ -358,6 +358,7 @@ function Page() {
               p: { xs: 2, sm: 4, md: 6, lg: 8 },
               boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
               borderRadius: 2,
+              backgroundColor: "#F3F4F6",
             }}
           >
             <Typography
@@ -375,17 +376,30 @@ function Page() {
 
             <Grid
               container
-              spacing={{ xs: 3, sm: 4, md: 5 }}
+              spacing={{ xs: 0, sm: 4, md: 5 }}
               justifyContent="center"
-              alignItems="stretch"
             >
               {shortcutsWithImage.map((item, ind) => (
-                <Grid item key={ind} xs={12} sm={6} md={4} lg={4}>
+                <Grid
+                  item
+                  key={ind}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={4}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    mt: { xs: 8 },
+                  }}
+                >
                   <Stack
-                    spacing={2}
+                    spacing={3}
                     alignItems="center"
                     sx={{
                       height: "100%",
+                      width: "100%",
+                      maxWidth: 350,
                       textAlign: "center",
                     }}
                   >
@@ -410,6 +424,7 @@ function Page() {
                     <Box
                       sx={{
                         width: "100%",
+                        height: 0,
                         paddingTop: "75%", // 4:3 aspect ratio
                         position: "relative",
                         borderRadius: 2,
@@ -421,6 +436,7 @@ function Page() {
                         alt={`${item.shortcut} image`}
                         layout="fill"
                         objectFit="cover"
+                        sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
                       />
                     </Box>
                   </Stack>
