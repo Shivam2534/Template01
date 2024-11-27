@@ -175,7 +175,7 @@ export default function Home() {
             Capitol AI
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", gap: {xs:0.2,sm:2} }}>
+        <Box sx={{ display: "flex", gap: { xs: 0.2, sm: 2 } }}>
           <Button variant="text" sx={{ color: "white" }}>
             Log In
           </Button>
@@ -192,56 +192,58 @@ export default function Home() {
       </Box>
 
       {/* <HeroSection /> */}
-      <Container maxWidth="lg" sx={{ pt: 20, pb: 10 }}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Typography
-            variant="h1"
-            align="center"
-            sx={{
-              fontSize: isMobile ? "3rem" : "5rem",
-              fontWeight: 600,
-              mb: 4,
-            }}
+      <Box>
+        <Container maxWidth="lg" sx={{ pt: 15, pb: 10 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            Create Powerful Content
-          </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            sx={{
-              color: "rgba(255,255,255,0.7)",
-              maxWidth: "800px",
-              mx: "auto",
-              mb: 6,
-              lineHeight: 1.6,
-            }}
-          >
-            Capitol AI is a smart document creator with advanced API and SDK
-            solutions. We transform publishers into AI-native companies that
-            deliver the customized experiences their customers demand.
-          </Typography>
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Button
-              variant="contained"
-              size="large"
+            <Typography
+              variant="h1"
+              align="center"
               sx={{
-                bgcolor: "#4169E1",
-                px: 6,
-                py: 2,
-                fontSize: "1.1rem",
-                "&:hover": { bgcolor: "#3154b3" },
-                borderRadius: 10,
+                fontSize: isMobile ? "2.5rem" : "5rem",
+                fontWeight: 600,
+                mb: 4,
               }}
             >
-              Sign Up →
-            </Button>
-          </Box>
-        </motion.div>
-      </Container>
+              Create Powerful Content
+            </Typography>
+            <Typography
+              variant="h5"
+              align="center"
+              sx={{
+                color: "rgba(255,255,255,0.7)",
+                maxWidth: "800px",
+                mx: "auto",
+                mb: 6,
+                lineHeight: 1.6,
+              }}
+            >
+              Capitol AI is a smart document creator with advanced API and SDK
+              solutions. We transform publishers into AI-native companies that
+              deliver the customized experiences their customers demand.
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                variant="contained"
+                size="large"
+                sx={{
+                  bgcolor: "#4169E1",
+                  px: 6,
+                  py: 2,
+                  fontSize: "1.1rem",
+                  "&:hover": { bgcolor: "#3154b3" },
+                  borderRadius: 10,
+                }}
+              >
+                Sign Up →
+              </Button>
+            </Box>
+          </motion.div>
+        </Container>
+      </Box>
 
       {/* <VideoSection /> */}
       <Box sx={{ bgcolor: "#000", py: 10 }}>
