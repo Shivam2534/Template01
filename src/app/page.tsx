@@ -163,19 +163,19 @@ export default function Home() {
           width: "100%",
           zIndex: 1000,
           backdropFilter: "blur(10px)",
-          background: "rgba(0,0,0,0.5)",
+          background: "rgba(0,0,0,0.1)",
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Icon
-            icon="sparkles"
+            icon="mdi:sparkles"
             style={{ color: "#4169E1", fontSize: "24px" }}
           />
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Capitol AI
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", gap: 2 }}>
+        <Box sx={{ display: "flex", gap: {xs:0.2,sm:2} }}>
           <Button variant="text" sx={{ color: "white" }}>
             Log In
           </Button>
