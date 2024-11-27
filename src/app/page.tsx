@@ -4,964 +4,921 @@ import {
   Box,
   Typography,
   Button,
-  Stack,
+  useMediaQuery,
+  useTheme,
   Grid,
-  Paper,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Link,
+  Stack,
 } from "@mui/material";
-import Image from "next/image";
-import voidLogo from "../../public/voidLogo.png";
-import c1 from "../../public/c1.png";
-import c2 from "../../public/c2.png";
-import c3 from "../../public/c3.png";
 import { Icon } from "@iconify/react";
-import Link from "next/link";
+import React from "react";
+import { useState } from "react";
+import Image from "next/image";
+import t50 from "../../public/t50.png";
+import t52 from "../../public/t52.png";
+import t53 from "../../public/t53.png";
 
 function Page() {
+  {
+    /*
+     ******************************************
+     *        CODE OF NAVIGATION BAR          *
+     ******************************************
+     */
+  }
   const menuBar = [
     {
-      desktopName: "Discord",
-      onMobile: true,
+      desktopName: "Home",
+      mobileName: "Home",
     },
     {
-      desktopName: "GitHub",
-      onMobile: false,
+      desktopName: "Affiliates",
+      mobileName: "Affiliates",
+    },
+    {
+      desktopName: "Blog",
+      mobileName: "Blog",
+    },
+  ];
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const ToggleMenuOnMobile = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const directToClickedTag = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const features = [
+    {
+      icon: <Icon icon="ix:report-barchart" style={{ color: "#8ECAE6" }} />,
+      title: "Manage all issues in a singular ticketing system",
+    },
+    {
+      icon: <Icon icon="gala:search" style={{ color: "#8ECAE6" }} />,
+      title: "Identify compliance issues in every article",
+    },
+    {
+      icon: (
+        <Icon
+          icon="material-symbols-light:mail-outline"
+          style={{ color: "#8ECAE6" }}
+        />
+      ),
+      title: "Automatically send emails when issues are found",
+    },
+    {
+      icon: <Icon icon="line-md:image-filled" style={{ color: "#8ECAE6" }} />,
+      title: "Ensure affiliates are using your brand correctly",
+    },
+    {
+      icon: <Icon icon="mynaui:chat-messages" style={{ color: "#8ECAE6" }} />,
+      title: "Maintain all communications within a singular platform",
+    },
+    {
+      icon: (
+        <Icon icon="solar:hand-money-linear" style={{ color: "#8ECAE6" }} />
+      ),
+      title: "Grow into new audiences with more confidence",
     },
   ];
 
-  const shortcutsWithImage = [
+  const faqs = [
     {
-      shortcut: "Tab",
-      des: "Press 'Tab' to apply autocomplete.",
-      img: c1,
+      question: "What is Affil.ai?",
+      answer:
+        "Affil.ai is an AI-powered platform designed to help businesses manage and monitor their affiliate marketing programs more effectively.",
     },
     {
-      shortcut: "Ctrl + K",
-      des: "Edit your selection inline.",
-      img: c2,
+      question: "Who is this product for?",
+      answer:
+        "This product is perfect for businesses running affiliate programs, marketing managers, and anyone looking to streamline their affiliate marketing operations.",
     },
     {
-      shortcut: "Ctrl + L",
-      des: "Ask questions and include files.",
-      img: c3,
+      question: "What media do you support?",
+      answer:
+        "We support a wide range of media including text content, images, videos, and social media posts across various platforms.",
     },
     {
-      shortcut: "Ctrl + L",
-      des: "Ask questions and include files.",
-      img: c3,
+      question: "Got more questions?",
+      answer:
+        "Feel free to reach out to our support team who will be happy to help you with any additional questions you might have.",
     },
   ];
 
-  const LLMmodels = [
-    {
-      Heading: "Host Locally",
-      CompanyImg: [
-        { companyIcon: '<Icon icon="devicon:google" />' },
-        { companyIcon: '<Icon icon="logos:microsoft-icon" />' },
-        { companyIcon: '<Icon icon="arcticons:openai-chatgpt" />' },
-      ],
-      subHeading1: "Never run out of API credits again. We offer",
-      subHeading2: "tools like Ollama to host quality models locally.",
-      overlapOrGap: true,
-    },
-    {
-      Heading: "Host Locally",
-      CompanyImg: [
-        { companyIcon: '<Icon icon="devicon:google" />' },
-        { companyIcon: '<Icon icon="logos:microsoft-icon" />' },
-      ],
-      subHeading1: "Send direct to Claude, GPT, or Gemini. Unlike other",
-      subHeading2: "editors, we don't act as a middleman to your LLM calls.",
-      overlapOrGap: false,
-    },
-  ];
+  const [expanded, setExpanded] = useState<string | false>(false);
+
+  const handleChange =
+    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      setExpanded(isExpanded ? panel : false);
+    };
 
   return (
     <Box>
-      {/* Navigation bar */}
-      <Box
-        sx={{
-          width: "100%",
-          height: 100,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      {/* NAVIGATION BAR */}
+      <Box sx={{ width: "100%", height: 100 }}>
         <Container
-          maxWidth={false}
           sx={{
-            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
-            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
-            maxWidth: "xl",
-            margin: "0 auto",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: "100%",
           }}
         >
+          {/* Left section */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <Box sx={{ display: "flex", gap: 1 }}>
+              <Box sx={{ fontSize: 40 }}>
+                <Icon icon="emojione-monotone:handshake" />
+              </Box>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Affil.ai
+              </Typography>
+            </Box>
+          </Box>
+          {/* Middle section */}
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              backgroundColor: "white",
-              px: 2,
-              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-              borderRadius: 2,
-              height: 52,
+              display: { xs: "none", md: "flex", justifyContent: "center" },
+              gap: 2,
             }}
           >
-            {/* Left section */}
-            <Box sx={{ display: "flex", gap: 4 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 1,
-                  justifyItems: "center",
-                  alignItems: "center",
-                }}
+            {menuBar.map((item, ind) => (
+              <Button
+                key={ind}
+                sx={{ color: "black", textTransform: "none", fontSize: 16 }}
               >
-                <Image
-                  src={voidLogo.src}
-                  alt="Void Logo"
-                  width={45}
-                  height={45}
-                />
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: "bolder", fontSize: 27, mb: 1 }}
-                >
-                  Void
-                </Typography>
-                <Button
-                  sx={{
-                    color: "black",
-                    textTransform: "none",
-                    ml: { xs: 1, sm: 3 },
-                    fontSize: { xs: 15, md: 18 },
-                  }}
-                >
-                  Waitlist
-                </Button>
-              </Box>
-            </Box>
+                {item.desktopName}
+              </Button>
+            ))}
+          </Box>
+          {/* Right section */}
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "black",
+              color: "white",
+              textTransform: "none",
+              display: { xs: "none", md: "block" },
+            }}
+          >
+            Book a Demo
+          </Button>
+          <Box
+            sx={{
+              display: { xs: "block", md: "none" },
+              cursor: "pointer",
+              border: isMobileMenuOpen ? "2px solid black" : "none",
+              padding: isMobileMenuOpen ? "4px" : "0",
+              borderRadius: "8px", // Optional for rounded corners
+              transition: "all 0.3s ease", // Smooth transition for border and padding
+            }}
+            onClick={ToggleMenuOnMobile}
+          >
+            <Icon
+              icon={isMobileMenuOpen ? "mdi:close" : "mdi:menu"}
+              style={{ fontSize: "24px" }}
+            />
+          </Box>
 
-            {/* Right section */}
-            <Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                }}
-              >
-                {menuBar.map((item, ind) => (
-                  <Button
-                    key={ind}
-                    sx={{
-                      color: "black",
-                      textTransform: "none",
-                      fontSize: { xs: 15, md: 18 },
-                      display: {
-                        xs: item.onMobile === false ? "none" : "block",
-                        sm: "block",
-                      },
-                    }}
-                  >
-                    {item.desktopName}
-                  </Button>
-                ))}
-              </Box>
-            </Box>
+          {/* Mobile Menu */}
+          <Box
+            sx={{
+              display: isMobileMenuOpen && isSmallScreen ? "flex" : "none",
+              flexDirection: "column",
+              position: "absolute",
+              top: "27%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: isSmallScreen ? "80%" : "50%",
+              backgroundColor: "#FFFFFF",
+              padding: 2,
+              borderRadius: 2,
+              boxShadow: 3,
+            }}
+          >
+            {menuBar.map((MenuItem, ind) => (
+              <Button key={ind} onClick={directToClickedTag}>
+                {MenuItem.mobileName}
+              </Button>
+            ))}
           </Box>
         </Container>
       </Box>
 
-      {/* Code Of Section-1 */}
+      {/* SECTION-1/ */}
       <Box
         sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
+          bgcolor: "#002366",
+          color: "white",
+          py: { xs: 8, md: 12 },
           position: "relative",
           overflow: "hidden",
-          pb: 10,
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: "40%",
-            pointerEvents: "none",
-          },
         }}
       >
-        <Container
-          maxWidth={false}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
-            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
-            maxWidth: "xl",
-            gap: 15,
-          }}
-        >
-          <Stack
-            spacing={4}
-            alignItems="center"
+        <Container maxWidth="lg">
+          {/* Text Content */}
+          <Box
             sx={{
               textAlign: "center",
-              position: "relative",
-              p: 6,
-              boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
-              borderRadius: 2,
+              maxWidth: "800px",
+              mx: "auto",
+              mb: { xs: 6, md: 8 },
+              px: 2,
             }}
           >
-            {/* Cube Logo */}
+            <Typography
+              component="h2"
+              sx={{
+                fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4rem" },
+                fontWeight: 700,
+                lineHeight: 1.2,
+                mb: 2,
+              }}
+            >
+              AI Compliance & Monitoring
+              <br />
+              For Affiliate Marketing
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                mb: 4,
+                opacity: 0.9,
+              }}
+            >
+              Keep an eye out on all your affiliates and never miss
+              <br />a compliance issue again
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{
+                bgcolor: "white",
+                color: "#002366",
+                fontSize: { xs: "1rem", sm: "1.1rem" },
+                px: { xs: 4, sm: 6 },
+                py: { xs: 1.5, sm: 2 },
+                borderRadius: "50px",
+                "&:hover": {
+                  bgcolor: "rgba(255, 255, 255, 0.9)",
+                },
+              }}
+            >
+              Book a Demo!
+            </Button>
+          </Box>
+
+          {/* Images Container */}
+          <Box
+            sx={{
+              position: "relative",
+              maxWidth: "1200px",
+              mx: "auto",
+              px: { xs: 2, md: 8 },
+            }}
+          >
+            {/* Left Small Image */}
             <Box
               sx={{
-                width: { xs: 170, sm: 200 },
-                height: { xs: 170, sm: 200 },
-                position: "relative",
-                mb: { xs: 4, sm: 6 },
+                display: { xs: "none", md: "block" },
+                position: "absolute",
+                left: { md: "0%" },
+                bottom: { md: "15%" },
+                width: { md: "200px", lg: "250px" },
+                height: { md: "150px", lg: "180px" },
+                bgcolor: "white",
+                borderRadius: "12px",
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                overflow: "hidden",
+                zIndex: 2,
+                transform: "translate(0, 0)", // Initial position
+                transition: "transform 0.3s ease", // Smooth transition
                 "&:hover": {
-                  transform: "translateY(-5px)",
+                  transform: "translate(-10px, -10px)", // Moves slightly up and left
                 },
               }}
             >
               <Image
-                src={voidLogo}
-                alt="Void Logo"
-                width={120}
-                height={120}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
+                src={t52}
+                alt="Partner Stats Graph"
+                layout="fill"
+                objectFit="cover"
               />
             </Box>
 
-            {/* Heading */}
-            <Typography
-              variant="h1"
+            {/* Main Center Image */}
+            <Box
               sx={{
-                fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4rem" },
-                fontWeight: 800,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.2,
-                mb: { xs: 2, sm: 3 },
+                position: "relative",
+                width: "100%",
+                height: { xs: "300px", sm: "400px", md: "500px" },
+                mx: "auto",
+                borderRadius: "12px",
+                overflow: "hidden",
+                boxShadow: "0 4px 30px rgba(0, 0, 0, 0.2)",
+                transform: "translate(0, 0)", // Initial position
+                transition: "transform 0.3s ease", // Smooth transition
+                "&:hover": {
+                  transform: "translate(0, -10px)", // Moves slightly up
+                },
               }}
             >
-              The open source
-              <br />
-              AI code editor.
-            </Typography>
-
-            {/* Subtitle */}
-            <Typography
-              variant="h2"
-              sx={{
-                fontSize: { xs: "1rem", sm: "1.25rem" },
-                color: "text.secondary",
-                maxWidth: "600px",
-                mb: { xs: 4, sm: 6 },
-                fontWeight: "normal",
-              }}
-            >
-              Void is an open source Cursor alternative. Write code with the
-              best AI tools, use any model, and retain full control over your
-              data.
-            </Typography>
-
-            {/* Buttons */}
-            <Stack
-              direction={{ xs: "column", sm: "row" }}
-              spacing={{ xs: 2, sm: 3 }}
-              sx={{ mb: { xs: 6, sm: 8 } }}
-            >
-              <Button
-                variant="contained"
-                size="large"
-                startIcon={<Icon icon="mdi:github" />}
-                sx={{
-                  borderRadius: "50px",
-                  px: { xs: 2, sm: 4 },
-                  py: 1.5,
-                  fontSize: "1.1rem",
-                  backgroundColor: "#3A72ED",
-                  "&:hover": {
-                    backgroundColor: "#1a1e21",
-                  },
-                  boxShadow: "0 4px 14px 0 rgba(0,0,0,0.1)",
-                }}
-              >
-                Star on Github
-              </Button>
-              <Button
-                variant="contained"
-                size="large"
-                endIcon={<Icon icon="mdi:arrow-right" />}
-                sx={{
-                  borderRadius: "50px",
-                  px: { xs: 2, sm: 4 },
-                  py: 1.5,
-                  fontSize: "1.1rem",
-                  backgroundColor: "#5D6672",
-                  "&:hover": {
-                    backgroundColor: "#555",
-                  },
-                  boxShadow: "0 4px 14px 0 rgba(0,0,0,0.1)",
-                }}
-              >
-                Get Access
-              </Button>
-            </Stack>
-
-            {/* Y Combinator Badge */}
-            <Stack
-              direction="row"
-              spacing={1}
-              alignItems="center"
-              sx={{
-                color: "text.secondary",
-                opacity: 0.8,
-              }}
-            >
-              <Typography variant="body2">Backed by</Typography>
-              <Box>
-                <Box
-                  sx={{
-                    color: "white",
-                    backgroundColor: "#FB651E",
-                    px: 1,
-                    py: 0.5,
-                    fontSize: "0.875rem",
-                    fontWeight: "bold",
-                  }}
-                  component="span"
-                >
-                  Y
-                </Box>{" "}
-                <Box sx={{ color: "#FB651E" }} component="span">
-                  Combinator
-                </Box>
-              </Box>
-            </Stack>
-          </Stack>
-
-          <Stack
-            spacing={{ xs: 4, sm: 6, md: 8 }}
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              textAlign: "center",
-              position: "relative",
-              p: { xs: 2, sm: 4, md: 6, lg: 8 },
-              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-              borderRadius: 2,
-              backgroundColor: "#F3F4F6",
-            }}
-          >
-            <Typography
-              variant="h1"
-              sx={{
-                fontSize: { xs: "1.8rem", sm: "2.2rem", md: "2.5rem" },
-                fontWeight: 900,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.2,
-              }}
-            >
-              The AI Features You Love.
-            </Typography>
-
-            <Grid
-              container
-              spacing={{ xs: 0, sm: 4, md: 5 }}
-              justifyContent="center"
-            >
-              {shortcutsWithImage.map((item, ind) => (
-                <Grid
-                  item
-                  key={ind}
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  lg={4}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    mt: { xs: 5 },
-                  }}
-                >
-                  <Stack
-                    spacing={3}
-                    alignItems="center"
-                    sx={{
-                      height: "100%",
-                      width: "100%",
-                      maxWidth: 350,
-                      textAlign: "center",
-                    }}
-                  >
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: { xs: "1.4rem", sm: "1.3rem", md: "1.4rem" },
-                      }}
-                    >
-                      {item.shortcut}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        width: "100%",
-                        fontSize: { xs: "0.9rem", sm: "1rem" },
-                        flexGrow: 1,
-                      }}
-                    >
-                      {item.des}
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: 0,
-                        paddingTop: "75%", // 4:3 aspect ratio
-                        position: "relative",
-                        borderRadius: 2,
-                        overflow: "hidden",
-                      }}
-                    >
-                      <Image
-                        src={item.img}
-                        alt={`${item.shortcut} image`}
-                        layout="fill"
-                        objectFit="cover"
-                        sizes="(max-width: 600px) 100vw, (max-width: 960px) 50vw, 33vw"
-                      />
-                    </Box>
-                  </Stack>
-                </Grid>
-              ))}
-            </Grid>
-          </Stack>
-
-          <Stack
-            spacing={4}
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              textAlign: "center",
-              position: "relative",
-              p: 2,
-              pt: 7,
-              boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)",
-              borderRadius: 2,
-            }}
-          >
-            {/* Heading */}
-            <Typography
-              variant="h2"
-              sx={{
-                fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
-                fontWeight: 800,
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Powered by VS Code.
-            </Typography>
-
-            {/* Description */}
-            <Typography
-              variant="h3"
-              sx={{
-                fontSize: { xs: "1rem", sm: "1.25rem" },
-                color: "text.secondary",
-                maxWidth: "600px",
-                fontWeight: "normal",
-              }}
-            >
-              Void is a fork of VS Code. We let you transfer over all your
-              themes, keybinds, and settings in one click.
-            </Typography>
-
-            {/* Logos */}
-            <Stack
-              direction="row"
-              spacing={3}
-              alignItems="center"
-              justifyContent="center"
-              sx={{ mt: 4 }}
-            >
-              {/* VS Code Logo */}
-              <Box
-                sx={{ width: { xs: 48, sm: 64 }, height: { xs: 48, sm: 64 } }}
-              >
-                <Icon
-                  icon="vscode-icons:file-type-vscode"
-                  width="100%"
-                  height="100%"
-                />
-              </Box>
-
-              {/* Bidirectional Arrow */}
-              <Icon
-                icon="mdi:arrow-left-right"
-                width={24}
-                height={24}
-                style={{ opacity: 0.5 }}
+              <Image
+                src={t50}
+                alt="Dashboard Preview"
+                layout="fill"
+                objectFit={isSmallScreen ? "contain" : "fill"}
+                priority
               />
+            </Box>
 
-              {/* Void Logo (Cube) */}
-              <Box
-                sx={{
-                  width: { xs: 48, sm: 64 },
-                  height: { xs: 48, sm: 64 },
-                  position: "relative",
-                }}
-              >
-                <Image
-                  src={voidLogo}
-                  alt="Void Logo"
-                  width={64}
-                  height={64}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                  }}
-                />
-              </Box>
-            </Stack>
-          </Stack>
+            {/* Right Small Image */}
+            <Box
+              sx={{
+                display: { xs: "none", md: "block" },
+                position: "absolute",
+                right: { md: "0%" },
+                top: { md: "15%" },
+                width: { md: "200px", lg: "250px" },
+                height: { md: "150px", lg: "180px" },
+                bgcolor: "white",
+                borderRadius: "12px",
+                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.15)",
+                overflow: "hidden",
+                zIndex: 2,
+                transform: "translate(0, 0)", // Initial position
+                transition: "transform 0.3s ease", // Smooth transition
+                "&:hover": {
+                  transform: "translate(10px, -10px)", // Moves slightly up and right
+                },
+              }}
+            >
+              <Image
+                src={t53}
+                alt="Performance Metrics"
+                layout="fill"
+                objectFit="cover"
+              />
+            </Box>
+          </Box>
         </Container>
       </Box>
 
-      {/* Code Of Section-2 */}
-      <Box
-        sx={{
-          position: "relative",
-          bgcolor: "#E2E8F0",
-          overflow: "hidden",
-          pt: { xs: 8, md: 12 },
-          pb: { xs: 10, md: 16 },
-        }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            left: 0,
-            top: 0,
-            width: "100%",
-            height: { xs: "30px", sm: "40px", md: "50px" },
-            bgcolor: "white",
-            borderRadius: "0 0 50% 50%",
-          }}
-        />
-
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: "center", mb: { xs: 4, md: 6 } }}>
-            <Typography
-              variant="h2"
-              component="h2"
-              gutterBottom
+      {/* SECTION-2 */}
+      <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
+        <Grid container spacing={{ xs: 12, md: 8 }} alignItems="center">
+          {/* Left Column */}
+          <Grid item xs={12} md={6}>
+            <Box
               sx={{
-                fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
-                fontWeight: 700,
+                maxWidth: 500,
+                mx: { xs: "auto", md: 0 },
+                display: "flex",
+                flexDirection: "column",
+                gap: { xs: 6, md: 15 },
               }}
             >
-              Community Features.
-            </Typography>
-            <Typography
-              variant="h5"
-              sx={{
-                fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
-                color: "text.secondary",
-                maxWidth: "800px",
-                mx: "auto",
-              }}
-            >
-              Anyone can advance our Roadmap or build their own AI integration.
-            </Typography>
-          </Box>
-
-          <Grid container spacing={4}>
-            {shortcutsWithImage.map((item, index) => (
-              <Grid item xs={12} sm={6} md={6} key={index}>
+              <Box>
+                <Typography
+                  component="h2"
+                  sx={{
+                    fontSize: { xs: "2rem", sm: "2.3rem", md: "2.5rem" },
+                    fontWeight: 700,
+                    lineHeight: 1.2,
+                    mb: 2,
+                  }}
+                >
+                  Keeping Track Of Affiliates Is Hard
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "1rem", sm: "1.125rem" },
+                    color: "text.secondary",
+                    mb: 4,
+                  }}
+                >
+                  Affiliates are constantly generating new content and sometimes
+                  changing old content. Knowing when these changes happen is
+                  near impossible
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  textAlign: { xs: "center", md: "left" },
+                  "& svg": {
+                    width: { xs: 80, sm: 40 },
+                    height: { xs: 80, sm: 40 },
+                    color: "primary.main",
+                  },
+                }}
+              >
                 <Box
                   sx={{
-                    textAlign: "center",
-                    p: 2,
-                    height: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
-                    bgcolor: "#E2E8F0",
-                    transition: "all 0.3s ease-in-out",
+                    justifyItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: { xs: 250, sm: 350 },
+                      height: 12,
+                      backgroundColor: "black",
+                      borderRadius: "25% 25% 0 0",
+                    }}
+                  />
+                  <Box sx={{ display: "flex", gap: 2 }}>
+                    <Box
+                      sx={{ display: "flex", flexDirection: "column", gap: 6 }}
+                    >
+                      <Box
+                        sx={{
+                          width: { xs: 150, sm: 250 },
+                          height: 12,
+                          backgroundColor: "black",
+                          borderRadius: 1,
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          width: { xs: 150, sm: 250 },
+                          height: 12,
+                          backgroundColor: "black",
+                          borderRadius: 1,
+                        }}
+                      />
+                    </Box>
+                    <Icon
+                      icon="zondicons:search"
+                      style={{ color: "black", width: 90, height: 90 }}
+                    />{" "}
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Grid>
+
+          {/* Right Column */}
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                position: "relative",
+                height: "100%",
+                minHeight: 300,
+                display: "flex",
+                flexDirection: "column",
+                gap: { xs: 6, md: 15 },
+              }}
+            >
+              {/* Avatar Grid */}
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 0.3fr)",
+                  gap: 2,
+                  mb: 4,
+                }}
+              >
+                {[...Array(6)].map((_, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      width: 100,
+                      height: 100,
+                      justifyItems: "center",
+                      alignContent: "center",
+                    }}
+                  >
+                    {index == 1 && (
+                      <Icon
+                        icon="ooui:user-avatar"
+                        height="100%"
+                        width="100%"
+                      />
+                    )}
+                    {index != 1 && (
+                      <Icon
+                        icon="ooui:user-avatar"
+                        height="100%"
+                        width="100%"
+                        style={{ color: "#F5F5F5" }}
+                      />
+                    )}
+                  </Box>
+                ))}
+              </Box>
+
+              <Box>
+                <Typography
+                  component="h2"
+                  sx={{
+                    fontSize: { xs: "2rem", sm: "2.3rem", md: "2.5rem" },
+                    fontWeight: 700,
+                    lineHeight: 1.2,
+                    mb: 2,
+                  }}
+                >
+                  Needles In A Haystack
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "1rem", sm: "1.125rem" },
+                    color: "text.secondary",
+                  }}
+                >
+                  Affiliate content can be long and wordy. Finding all the brand
+                  and compliance issues within each individual article takes
+                  time & effort
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
+
+      {/* SECTION-3 */}
+      <Box sx={{ backgroundColor: "#F1F3F6" }}>
+        <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
+          <Grid container spacing={{ xs: 4, md: 8 }} alignItems="flex-start">
+            {/* Left Column - Main Content */}
+            <Grid item xs={12} md={5}>
+              <Box sx={{ maxWidth: 500, mb: { xs: 4, md: 0 } }}>
+                <Typography
+                  component="h2"
+                  sx={{
+                    fontSize: { xs: "2.5rem", sm: "3rem", md: "3.3rem" },
+                    fontWeight: 800,
+                    lineHeight: 1.2,
+                    mb: 3,
+                  }}
+                >
+                  AI Powered Monitoring
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                    color: "text.secondary",
+                    mb: 4,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  We will empower your affiliate strategy with AI, streamlining
+                  operations and boosting performance across the board
+                </Typography>
+                <Box
+                  component="a"
+                  href="#"
+                  sx={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                    color: "primary.main",
+                    textDecoration: "none",
                     "&:hover": {
-                      transform: "translateY(-5px)",
+                      textDecoration: "underline",
                     },
+                  }}
+                >
+                  Learn more
+                  <Button
+                    component="span"
+                    sx={{
+                      display: "inline-block",
+                      ml: 1,
+                    }}
+                  >
+                    →
+                  </Button>
+                </Box>
+              </Box>
+            </Grid>
+
+            {/* Right Column - Features Grid */}
+            <Grid item xs={12} md={7}>
+              <Grid container spacing={3}>
+                {features.map((feature, index) => (
+                  <Grid item xs={12} sm={6} key={index}>
+                    <Box
+                      sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                    >
+                      <Box
+                        sx={{
+                          "& svg": {
+                            width: { xs: 40, md: 32 },
+                            height: { xs: 40, md: 32 },
+                          },
+                        }}
+                      >
+                        {feature.icon}
+                      </Box>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "1rem", sm: "1.1rem" },
+                          color: "black",
+                          lineHeight: 1.4,
+                        }}
+                      >
+                        {feature.title}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* SECTION-3 */}
+      <Box>
+        <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
+          <Grid container spacing={{ xs: 4, md: 8 }} alignItems="flex-start">
+            {/* Left Column - Title */}
+            <Grid item xs={12} md={5}>
+              <Box sx={{ maxWidth: 500, mb: { xs: 4, md: 0 } }}>
+                <Typography
+                  component="h2"
+                  sx={{
+                    fontSize: { xs: "2.5rem", sm: "3rem", md: "3.5rem" },
+                    fontWeight: 800,
+                    lineHeight: 1.2,
+                    mb: 3,
+                  }}
+                >
+                  Frequently Asked Questions
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                    color: "text.secondary",
+                    lineHeight: 1.5,
+                  }}
+                >
+                  Find quick answers to help you understand our platform and
+                  make the most of it
+                </Typography>
+              </Box>
+            </Grid>
+
+            {/* Right Column - Accordions */}
+            <Grid item xs={12} md={7}>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                {faqs.map((faq, index) => (
+                  <Accordion
+                    key={index}
+                    expanded={expanded === `panel${index}`}
+                    onChange={handleChange(`panel${index}`)}
+                    elevation={0}
+                    sx={{
+                      border: "none",
+                      "&:before": { display: "none" },
+                      backgroundColor: "transparent",
+                    }}
+                  >
+                    <AccordionSummary
+                      expandIcon={
+                        <Icon
+                          icon="octicon:plus-16"
+                          fontSize={24}
+                          style={{
+                            transform:
+                              expanded === `panel${index}`
+                                ? "rotate(45deg)"
+                                : "none",
+                            transition: "transform 0.3s ease",
+                          }}
+                        />
+                      }
+                      sx={{
+                        padding: 0,
+                        "& .MuiAccordionSummary-content": {
+                          margin: 0,
+                        },
+                        "&.Mui-expanded": {
+                          minHeight: 48,
+                        },
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "1.25rem", sm: "1.5rem" },
+                          fontWeight: 600,
+                        }}
+                      >
+                        {faq.question}
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails sx={{ padding: "0 0 16px 0" }}>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "1rem", sm: "1.125rem" },
+                          color: "text.secondary",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        {faq.answer}
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                ))}
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* SECTION-4 */}
+      <Box sx={{ py: { xs: 4, sm: 6, md: 8 }, px: 2 }}>
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              background: "linear-gradient(135deg, #87CEEB 0%, #5F9EA0 100%)",
+              borderRadius: "24px",
+              py: { xs: 8, sm: 10, md: 12 },
+              px: { xs: 3, sm: 4, md: 6 },
+              textAlign: "center",
+              overflow: "hidden",
+              position: "relative",
+            }}
+          >
+            <Box
+              sx={{
+                maxWidth: "800px",
+                mx: "auto",
+                position: "relative",
+                zIndex: 1,
+              }}
+            >
+              <Typography
+                component="h1"
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4rem" },
+                  fontWeight: 700,
+                  lineHeight: 1.2,
+                  mb: 3,
+                }}
+              >
+                Effortlessly Ensure Compliance with AI
+              </Typography>
+
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: { xs: "1.1rem", sm: "1.25rem", md: "1.5rem" },
+                  mb: 6,
+                  opacity: 0.9,
+                }}
+              >
+                Eliminate the boring stuff so you can grow your affiliate
+                program with confidence
+              </Typography>
+
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "white",
+                  color: "#0066FF",
+                  fontSize: { xs: "1rem", sm: "1.125rem" },
+                  fontWeight: 600,
+                  py: { xs: 1.5, sm: 2 },
+                  px: { xs: 4, sm: 6 },
+                  borderRadius: "50px",
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "rgba(255, 255, 255, 0.9)",
+                  },
+                  boxShadow: "none",
+                }}
+              >
+                Book a Demo!
+              </Button>
+            </Box>
+
+            {/* Gradient Overlay */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background:
+                  "linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)",
+                zIndex: 0,
+              }}
+            />
+          </Box>
+        </Container>
+      </Box>
+
+      {/* FOOTER */}
+      <Box sx={{ bgcolor: "#002366", color: "white", pt: 6, pb: 4 }}>
+        <Container maxWidth="lg">
+          <Stack spacing={6}>
+            {/* Main Footer Content */}
+            <Stack
+              direction={{ xs: "column", md: "row" }}
+              justifyContent="space-between"
+              alignItems={{ xs: "flex-start", md: "center" }}
+              spacing={{ xs: 4, md: 0 }}
+            >
+              {/* Logo and Tagline */}
+              <Stack spacing={1}>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="center"
+                  component={Link}
+                  href="/"
+                  sx={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    "&:hover": { opacity: 0.9 },
                   }}
                 >
                   <Typography
                     variant="h6"
-                    gutterBottom
-                    sx={{ fontWeight: 600 }}
+                    sx={{
+                      fontSize: { xs: "1.5rem", sm: "1.75rem" },
+                      fontWeight: 700,
+                    }}
                   >
-                    {item.shortcut}
+                    Affil.ai
                   </Typography>
-                  <Box
-                    sx={{
-                      position: "relative",
-                      width: "100%",
-                      pt: "56.25%",
-                    }}
-                  >
-                    <Image
-                      src={item.img}
-                      alt={item.shortcut}
-                      layout="fill"
-                      objectFit="cover"
-                      style={{ borderRadius: 10 }}
-                    />
-                  </Box>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-
-        <Box
-          sx={{
-            position: "absolute",
-            left: 0,
-            bottom: 0,
-            borderRadius: "40% 40% 0 0",
-            width: "100%",
-            height: { xs: "30px", sm: "40px", md: "50px" },
-            bgcolor: "white",
-          }}
-        />
-      </Box>
-
-      {/* Code Of Section-3 */}
-      <Box sx={{ pt: 10 }}>
-        <Container
-          maxWidth={false}
-          sx={{
-            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
-            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
-            maxWidth: "xl",
-            margin: "0 auto",
-          }}
-        >
-          <Stack
-            spacing={4}
-            alignItems="center"
-            justifyItems="center"
-            sx={{
-              position: "relative",
-              boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
-              borderRadius: 2,
-              p: 3,
-            }}
-          >
-            <Box
-              sx={{
-                textAlign: "center",
-                width: "100%",
-                p: { xs: 2, sm: 6 },
-              }}
-            >
-              <Typography
-                component="h2"
-                sx={{
-                  fontSize: { xs: "2.5rem", sm: "3rem", md: "3.5rem" },
-                  fontWeight: 800,
-                  mb: 2,
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Any LLM, Anywhere.
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                  color: "text.secondary",
-                  maxWidth: "600px",
-                  mx: "auto",
-                }}
-              >
-                Host your own models locally, or communicate directly with your
-                favorites.
-              </Typography>
-            </Box>
-
-            {/* Cards Grid */}
-            <Grid
-              spacing={{ xs: 0, sm: 2 }}
-              rowSpacing={{ xs: 3 }}
-              container
-              sx={{ width: "100%", p: { sm: 1 } }}
-            >
-              {LLMmodels.map((model, index) => (
-                <Grid item xs={12} md={6} key={index}>
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      p: { xs: 3, sm: 4 },
-                      height: "100%",
-                      bgcolor: "#E5E7EB",
-                      borderRadius: 2,
-                    }}
-                  >
-                    <Box sx={{ mb: 3 }}>
-                      <Typography
-                        component="h3"
-                        sx={{
-                          fontSize: { xs: "1.5rem", sm: "1.75rem" },
-                          fontWeight: 700,
-                          mb: 3,
-                          textAlign: "center",
-                        }}
-                      >
-                        {model.Heading}
-                      </Typography>
-
-                      {/* Company Icons */}
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          mb: 3,
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            backgroundColor: "#E5E7EB",
-                          }}
-                        >
-                          {model.CompanyImg.map((company, idx) => (
-                            <Box
-                              key={idx}
-                              sx={{
-                                ml: model.overlapOrGap
-                                  ? idx === 0
-                                    ? 0
-                                    : -0.6 // Overlap
-                                  : idx === 0
-                                  ? 0
-                                  : 1, // Gap
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                p: 1,
-                                width: 60,
-                                height: 60,
-                                borderRadius: 2,
-                                boxShadow: "2px 2px 10px rgba(0, 0, 0, 0.2)",
-                                backgroundColor: "white",
-                              }}
-                            >
-                              <Icon
-                                icon={company.companyIcon.replace(
-                                  /<Icon icon="|" \/>/g,
-                                  ""
-                                )}
-                                style={{
-                                  opacity: 0.8,
-                                  fontSize: 100, // Controls size
-                                }}
-                              />
-                            </Box>
-                          ))}
-                        </Box>
-                      </Box>
-
-                      {/* Description */}
-                      <Typography
-                        sx={{
-                          textAlign: "center",
-                          color: "text.secondary",
-                          fontSize: { xs: "0.9rem", sm: "1rem" },
-                          lineHeight: 1.6,
-                        }}
-                      >
-                        <Typography>{model.subHeading1}</Typography>
-                        <Typography>{model.subHeading2}</Typography>
-                      </Typography>
-                    </Box>
-                  </Paper>
-                </Grid>
-              ))}
-            </Grid>
-          </Stack>
-        </Container>
-      </Box>
-
-      {/* Code Of Section-4 */}
-      <Box sx={{ my: 15 }}>
-        <Container
-          maxWidth={false}
-          sx={{
-            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
-            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
-            maxWidth: "xl",
-            margin: "0 auto",
-          }}
-        >
-          <Box
-            sx={{
-              bgcolor: "#1a1f2e",
-              borderRadius: 4,
-              p: { xs: 10, sm: 18, md: 20 },
-              textAlign: "center",
-              boxShadow: "0 4px 24px rgba(0, 0, 0, 0.15)",
-            }}
-          >
-            <Stack spacing={4} alignItems="center">
-              <Typography
-                variant="h2"
-                sx={{
-                  fontSize: { xs: "1rem", sm: "1.5rem", md: "2rem" },
-                  fontWeight: 700,
-                  color: "white",
-                  mb: { xs: 3, md: 4 },
-                }}
-              >
-                Get Started with Void.
-              </Typography>
-
-              <Stack spacing={2} sx={{ width: "100%", maxWidth: 280 }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  startIcon={
-                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                      <Icon icon="mdi:github" />
-                    </Box>
-                  }
+                </Stack>
+                <Typography
                   sx={{
-                    bgcolor: "#3b82f6",
-                    fontSize: "1rem",
-                    py: 1.5,
-                    borderRadius: 50,
-                    textTransform: "none",
-                    "&:hover": {
-                      bgcolor: "#2563eb",
-                    },
+                    fontSize: { xs: "0.875rem", sm: "1rem" },
+                    opacity: 0.8,
                   }}
                 >
-                  Star on Github
-                </Button>
+                  AI Compliance For Affiliate Marketing
+                </Typography>
+              </Stack>
 
-                <Button
-                  variant="contained"
-                  size="large"
-                  endIcon={
-                    <Box sx={{ display: { xs: "none", sm: "block" } }}>
-                      <Icon icon="mdi:arrow-top-right" />
-                    </Box>
-                  }
-                  sx={{
-                    bgcolor: "rgba(255, 255, 255, 0.1)",
-                    fontSize: "1rem",
-                    py: 1.5,
-                    borderRadius: 50,
-                    textTransform: "none",
-                    "&:hover": {
-                      bgcolor: "rgba(255, 255, 255, 0.15)",
-                    },
-                  }}
-                >
-                  Get Access
-                </Button>
+              {/* Navigation Links */}
+              <Stack
+                direction="row"
+                spacing={{ xs: 3, sm: 4 }}
+                sx={{
+                  "& a": {
+                    color: "white",
+                    textDecoration: "none",
+                    fontSize: { xs: "0.875rem", sm: "1rem" },
+                    "&:hover": { opacity: 0.8 },
+                  },
+                }}
+              >
+                <Link href="#">Home</Link>
+                <Link href="#">Affiliates</Link>
+                <Link href="#">Blog</Link>
               </Stack>
             </Stack>
-          </Box>
-        </Container>
-      </Box>
 
-      <Box
-        component="footer"
-        sx={{
-          borderTop: "1px solid",
-          borderColor: "divider",
-          bgcolor: "background.paper",
-        }}
-      >
-        <Container
-          maxWidth={false}
-          sx={{
-            paddingLeft: { xs: "16px", lg: "100px" }, // Dynamic left padding
-            paddingRight: { xs: "16px", lg: "100px" }, // Dynamic right padding
-            maxWidth: "xl",
-            margin: "0 auto",
-          }}
-        >
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={{ xs: 2, sm: 0 }}
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            {/* Copyright */}
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{
-                order: { xs: 2, sm: 1 },
-                textAlign: { xs: "center", sm: "left" },
-              }}
-            >
-              © 2024 Glass Devtools, Inc. - All rights reserved.
-            </Typography>
-
-            {/* Logo */}
+            {/* Divider */}
             <Box
               sx={{
-                order: { xs: 1, sm: 2 },
-                position: "relative",
-                width: 60, // Set the box dimensions (if needed)
-                height: 60, // Adjust as per your requirement
+                height: 1,
+                bgcolor: "rgba(255, 255, 255, 0.1)",
+                width: "100%",
               }}
-            >
-              <Image
-                src={voidLogo}
-                alt="Glass Devtools Logo"
-                width={60} // Set image width independently
-                height={60} // Set image height independently
-                style={{
-                  objectFit: "contain", // Ensures the image fits inside its box without distortion
-                }}
-              />
-            </Box>
+            />
 
-            {/* Contact Links */}
+            {/* Bottom Section */}
             <Stack
-              direction="row"
-              spacing={2}
-              alignItems="center"
-              sx={{
-                order: { xs: 3, sm: 3 },
-              }}
+              direction={{ xs: "column", sm: "row" }}
+              justifyContent="space-between"
+              alignItems={{ xs: "center", sm: "center" }}
+              spacing={{ xs: 2, sm: 0 }}
             >
+              <Typography
+                sx={{
+                  fontSize: { xs: "0.75rem", sm: "0.875rem" },
+                  opacity: 0.8,
+                }}
+              >
+                © 2024 Affil AI Incorporated. All rights reserved.
+              </Typography>
               <Link
-                href="https://discord.com"
+                href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                sx={{
+                  color: "white",
+                  "&:hover": { opacity: 0.8 },
+                  display: "flex",
+                }}
               >
-                <Icon icon="mdi:discord" width={24} height={24} />
-              </Link>
-              <Link
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon icon="mdi:github" width={24} height={24} />
-              </Link>
-              <Link href="mailto:hello@voideditor.com">
-                hello@voideditor.com
+                <Icon
+                  icon="ant-design:linkedin-outlined"
+                  style={{ color: "white", fontSize: 25 }}
+                />{" "}
               </Link>
             </Stack>
           </Stack>
