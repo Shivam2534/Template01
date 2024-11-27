@@ -48,11 +48,10 @@ function Page() {
     setIsMobileMenuOpen((prev) => !prev);
   };
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const directToClickedTag = () => {
     setIsMobileMenuOpen(false);
   };
-
   const features = [
     {
       icon: <Icon icon="ix:report-barchart" style={{ color: "#8ECAE6" }} />,
@@ -188,21 +187,25 @@ function Page() {
           {/* Mobile Menu */}
           <Box
             sx={{
-              display: isMobileMenuOpen && isSmallScreen ? "flex" : "none",
+              display: "flex",
               flexDirection: "column",
               position: "absolute",
-              top: "27%",
+              top: isMobileMenuOpen ? "23%" : "-10%", // Start hidden above the viewport
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: isSmallScreen ? "80%" : "50%",
+              width: "100%",
               backgroundColor: "#FFFFFF",
               padding: 2,
-              borderRadius: 2,
-              boxShadow: 3,
+              zIndex: 10,
+              transition: "top 0.3s ease-in-out", // Smooth transition effect
             }}
           >
             {menuBar.map((MenuItem, ind) => (
-              <Button key={ind} onClick={directToClickedTag}>
+              <Button
+                key={ind}
+                onClick={directToClickedTag}
+                sx={{ color: "black" }}
+              >
                 {MenuItem.mobileName}
               </Button>
             ))}
