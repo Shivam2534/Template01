@@ -36,6 +36,16 @@ export default function Home() {
     "Bloomberg", // Duplicated for seamless loop
   ];
 
+  interface PricingCardProps {
+    title: string;
+    price: string;
+    period?: string; // Optional prop with a default value
+    description: string;
+    buttonText: string; // Added buttonText prop
+    saveText?: string; // Added saveText prop, making it optional
+    isEnterprise?: boolean; // Added isEnterprise prop, making it optional
+  }
+
   const PricingCard = ({
     title,
     price,
@@ -44,7 +54,7 @@ export default function Home() {
     buttonText,
     saveText = "",
     isEnterprise = false,
-  }) => (
+  }: PricingCardProps) => (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
