@@ -1,1247 +1,965 @@
 "use client";
+import React, { useState } from "react";
 import {
-  Typography,
+  AppBar,
   Box,
   Button,
   Container,
-  Link,
   Grid,
-  CardContent,
-  Card,
-  AppBar,
-  Toolbar,
-  Checkbox,
-  FormControlLabel,
+  Typography,
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  ThemeProvider,
+  Toolbar,
+  Stack,
+  Paper,
+  Link,
+  TextField,
+  Divider,
 } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Icon } from "@iconify/react";
-import * as React from "react";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import templogo from "../../public/templogo.png";
+import prev1 from "../../public/prev1.png";
+import prev2 from "../../public/prev2.png";
+import prev3 from "../../public/prev3.png";
+import up1 from "../../public/up1.avif";
+import up2 from "../../public/up2.avif";
+import up3 from "../../public/up3.avif";
 
-const creators = [
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+    background: {
+      default: "#000",
+      paper: "#1a1a1a",
+    },
+    primary: {
+      main: "#10b981", // emerald-500
+    },
+  },
+  typography: {
+    fontFamily: "Inter, Arial, sans-serif",
+  },
+});
+
+const faqs = [
   {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/4a88ce45-ed90-47b0-92ce-13cea1eae360/Xdj5V184AzfXSZ3FIyLvh",
-    name: "greigory",
-    description: "Lezhin artist Check out",
-    link: "https://example.com/greigory",
+    question: "What is Patched?",
+    answer:
+      "Patched is an AI-powered code maintenance tool that helps developers automate repetitive tasks and improve code quality.",
   },
   {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/bad263da-d746-4df4-8cc7-daa8346569fd/Eg2lsRUhbwXQVhytYnbvS",
-    name: "batsouppe",
-    description: "OC Merch Artist",
-    link: "https://example.com/batsouppe",
+    question: "What exactly is Patchwork?",
+    answer:
+      "Patchwork is our open-source framework that powers Patched, allowing developers to create custom workflows for code maintenance.",
   },
   {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/247e42f2-f265-4fe0-a45d-8a670408b8f9/VBqmtzjAhhS8ZeVQt3d1u",
-    name: "ceomg",
-    description: "animal crossing creator",
-    link: "https://example.com/ceomg",
+    question: "How is it different from Copilot?",
+    answer:
+      "While Copilot focuses on code completion, Patched specializes in automating maintenance tasks like documentation updates and security patches.",
   },
   {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/57a6d4db-dda3-42d5-9ab4-ae94490a13ce/Z3xvH6cy6h1Z201Eyqipp",
-    name: "ovans",
-    description: "Artist + Designer",
-    link: "https://example.com/ovans",
+    question: "Is Patchwork free?",
+    answer:
+      "Yes, Patchwork is completely free and open-source. You can use it to create and run your own custom workflows.",
   },
   {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/bad263da-d746-4df4-8cc7-daa8346569fd/uLpmRl0C4xfmJEPzJx2h2",
-    name: "saiyagina",
-    description: "Visual dev, Webtoon creator",
-    link: "https://example.com/saiyagina",
+    question: "How do I try it out?",
+    answer:
+      "You can start by installing Patchwork via npm, or sign up for a Patched account to access our hosted solution.",
   },
   {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/eca5ceb3-8e73-41fb-b2fa-ae64d144dc6c/0sNv6pPFf3LUCsToQJlTp",
-    name: "gabihime",
-    description: "Light novelist and illustrator",
-    link: "https://example.com/gabihime",
-  },
-];
-const energyStats = [
-  { value: "18,000", unit: "Wh", label: "Driving an electric car" },
-  { value: "400", unit: "Wh", label: "Playing PC games" },
-  { value: "100", unit: "Wh", label: "Watching TV" },
-  { value: "5", unit: "Wh", label: "Chatting on DreamRP" },
-];
-const characters = [
-  {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/4a88ce45-ed90-47b0-92ce-13cea1eae360/Xdj5V184AzfXSZ3FIyLvh",
-    name: "Victor Castillo",
-    handle: "@greigory",
-    description:
-      "Have a chat with Victor Castillo, the moody love interest in Gregory's web...",
-  },
-  {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/bad263da-d746-4df4-8cc7-daa8346569fd/Eg2lsRUhbwXQVhytYnbvS",
-    name: "Tom Nook",
-    handle: "@ceomg",
-    description: "Off-brand Tom Nook",
-  },
-  {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/247e42f2-f265-4fe0-a45d-8a670408b8f9/VBqmtzjAhhS8ZeVQt3d1u",
-    name: "Tiktaalik - Aventura de Supervivencia Sci-Fi (Español)",
-    handle: "@saiyagina",
-    description:
-      "Está a bordo del Tiktaalik, una nave cuya misión es atravesar un agujero...",
-  },
-  {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/57a6d4db-dda3-42d5-9ab4-ae94490a13ce/Z3xvH6cy6h1Z201Eyqipp",
-    name: "Beckett (Vampire the Masquerade)",
-    handle: "@clarissaexplainingitall",
-    description:
-      "Cuthbert Beckett is a Gangrel scholar from the world of Vampire the Masque...",
-  },
-  {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/bad263da-d746-4df4-8cc7-daa8346569fd/uLpmRl0C4xfmJEPzJx2h2",
-    name: "Bluebear",
-    handle: "@ceomg",
-    description:
-      "Bluebear is an adorable blue bear cub who loves peaches and fire. She's an...",
-  },
-  {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/eca5ceb3-8e73-41fb-b2fa-ae64d144dc6c/0sNv6pPFf3LUCsToQJlTp",
-    name: "Prince Sara Ann Winder of San Francisco",
-    handle: "@clarissaexplainingitall",
-    description:
-      "The Ventrue ruler of San Francisco, Prince Winder is a character adapted...",
-  },
-  {
-    image:
-      "https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/eb2fd3f9-9737-405d-919f-06cab9940a33/KZwPUkNm1EpQav7hkk4mD",
-    name: "K",
-    handle: "@batsouppe",
-    description:
-      "Just having a little demon fun and righting the wrongs of the world, one sh...",
+    question: "I have more questions. Who do I talk to?",
+    answer:
+      "Join our Discord community or reach out to our support team at support@patched.codes",
   },
 ];
 
-const menuBar = [{ menuName: "Create" }, { menuName: "Chat" }];
+const features = [
+  {
+    id: "generate-readme",
+    icon: "file-text-outline",
+    title: "GenerateREADME",
+    command: "patchwork GenerateREADME",
+    configuration: ["disable_branch", "disable_pr", "force_pr_creation"],
+    preview: prev1,
+  },
+  {
+    id: "code-review",
+    icon: "git-pull-request-outline",
+    title: "CodeReview",
+    command: "patchwork review",
+    configuration: ["auto_approve", "skip_tests", "include_suggestions"],
+    preview: prev2,
+  },
+  {
+    id: "create-own",
+    icon: "file-code-outline",
+    title: "Create Your Own",
+    command: "patchwork init",
+    configuration: ["template_type", "workflow_name", "trigger_events"],
+    preview: prev3,
+  },
+];
 
-function App() {
-  const [open, setOpen] = useState(false);
+const features2 = [
+  "Patch Vulnerabilities",
+  "Upgrade Dependencies",
+  "Analyze Pull Requests",
+  "Generate Documentation",
+  "Triage Issues",
+  "Improve Code Quality",
+  "Fix Bugs",
+  "Create Tickets",
+];
 
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-  const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      <List>
-        {["Create", "Chat", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["Login", "Signup"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+const features3 = [
+  {
+    icon: "carbon:network-2",
+    title: "Fully Customizable",
+    description: "Customize patchflows or create new ones in minutes.",
+  },
+  {
+    icon: "carbon:security",
+    title: "Privacy First",
+    description: "Deploy patchwork within your own infrastructure.",
+  },
+  {
+    icon: "carbon:code",
+    title: "No code, Low code and AI Code",
+    description: "Generate patchflows using prompts, builders, or code.",
+  },
+  {
+    icon: "mdi:github",
+    title: "Free and Open Source",
+    description: "Patchwork is free and open-source forever!",
+  },
+];
 
-  function useInView(options = {}) {
-    const [isInView, setIsInView] = useState(false);
-    const ref = useRef<HTMLDivElement>(null);
+const plans = [
+  {
+    icon: "carbon:terminal",
+    name: "Free",
+    price: "$0",
+    period: "/ Per Month",
+    description: "Always Free",
+    buttonText: "Get Started",
+    buttonVariant: "outlined",
+    features: [
+      "Access to all patchflows via App and CLI",
+      "5 Patchflows per month",
+    ],
+    highlight: "5 Patchflows per month",
+  },
+  {
+    icon: "carbon:chart-line",
+    name: "Pro",
+    price: "$99",
+    period: "/ Per Month",
+    description: "Starting at",
+    buttonText: "Get Started",
+    buttonVariant: "contained",
+    features: ["All features in Free, plus", "200 Patchflows per month"],
+  },
+  {
+    icon: "carbon:data-base",
+    name: "Enterprise",
+    price: "Contact Us",
+    description: "Tailored pricing",
+    buttonText: "Set up a Call",
+    buttonVariant: "outlined",
+    features: ["All features in Pro, plus", "Unlimited Patchflows*"],
+  },
+];
 
-    useEffect(() => {
-      const currentRef = ref.current; // Capture the current ref value
-      const observer = new IntersectionObserver(([entry]) => {
-        setIsInView(entry.isIntersecting);
-      }, options);
+const posts = [
+  {
+    title: "Discover LLM-assisted workflow opportunities in your code",
+    date: "SEPTEMBER 26, 2024",
+    description:
+      "We present a new tool -- Patched GitHub repo analyzer that helps users discover different kinds of LLM-assisted workflows in their code.",
+    image: up1,
+  },
+  {
+    title: "Build your own AutoFix with Patchwork",
+    date: "SEPTEMBER 25, 2024",
+    description:
+      "We describe a patchflow for creating a customizable AutoFix tool that can automatically detect and fix software vulnerabilities using large language models (LLMs).",
+    image: up2,
+  },
+  {
+    title: "Evaluating code-to-readme generation using LLMs",
+    date: "SEPTEMBER 21, 2024",
+    description:
+      "We introduce Generate README Eval, a new benchmark to evaluate how well LLMs can generate README files from entire code repositories. Our results show that Gemini-1.5 is the SOTA model on this benchmark.",
+    image: up3,
+  },
+];
+export default function App() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-      if (currentRef) {
-        observer.observe(currentRef);
-      }
-
-      return () => {
-        if (currentRef) {
-          observer.unobserve(currentRef); // Use the captured value
-        }
-      };
-    }, [options]);
-
-    return [ref, isInView] as const;
-  }
-
-  const [ref, isInView] = useInView({ threshold: 0.4 });
-  const [ref1, isInView1] = useInView({ threshold: 0.2 });
-  const [refsustainable, isInViewsustainable] = useInView({ threshold: 0.2 });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.4,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
-  const [consent, setConsent] = useState(false);
-
-  const faqs = [
-    {
-      question: "What is Affil.ai?",
-      answer:
-        "Affil.ai is an AI-powered platform designed to help businesses manage and monitor their affiliate marketing programs more effectively.",
-    },
-    {
-      question: "Who is this product for?",
-      answer:
-        "This product is perfect for businesses running affiliate programs, marketing managers, and anyone looking to streamline their affiliate marketing operations.",
-    },
-    {
-      question: "What media do you support?",
-      answer:
-        "We support a wide range of media including text content, images, videos, and social media posts across various platforms.",
-    },
-    {
-      question: "Got more questions?",
-      answer:
-        "Feel free to reach out to our support team who will be happy to help you with any additional questions you might have.",
-    },
-  ];
-
-  const [expanded, setExpanded] = useState<string | false>(false);
-
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+  const [activeFeature, setActiveFeature] = useState(features[0]);
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      {/* <Header /> */}
-      <AppBar
-        position="static"
-        color="transparent"
-        elevation={0}
+    <ThemeProvider theme={theme}>
+      <Box
         sx={{
-          borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
-          backgroundColor: "white",
+          minHeight: "100vh",
+          backgroundColor: "background.default",
+          color: "white",
         }}
       >
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box
-            sx={{ display: { xs: "block", sm: "none" } }}
-            onClick={toggleDrawer(true)}
-          >
-            <Icon icon="mdi:menu" fontSize={22} />
-          </Box>
-          <Drawer open={open} onClose={toggleDrawer(false)}>
-            {DrawerList}
-          </Drawer>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              <Icon icon="lucide:sparkles" width="12" height="12" />
-            </Box>
-            <Box component="span" sx={{ mx: 1, fontWeight: 700 }}>
-              DreamRP
-            </Box>
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              <Icon icon="lucide:sparkles" width="12" height="12" />
-            </Box>{" "}
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: { xs: "flex-end", sm: "space-between" },
-              px: { xs: 0, sm: 2 },
-            }}
-          >
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
-              {menuBar.map((item, ind) => (
-                <Button key={ind} sx={{ color: "#71717A" }}>
-                  {item.menuName}
+        {/* <Navbar /> */}
+        <AppBar
+          position="fixed"
+          color="transparent"
+          sx={{
+            backgroundColor: "rgba(0,0,0,0.5)",
+            backdropFilter: "blur(10px)",
+            borderBottom: "1px solid rgba(255,255,255,0.1)",
+          }}
+        >
+          <Container maxWidth="xl">
+            <Toolbar
+              disableGutters
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Image
+                  src={templogo}
+                  alt="Patched Logo"
+                  width={36}
+                  height={36}
+                />
+                <Box
+                  sx={{
+                    color: "white",
+                    fontSize: "1.5rem",
+                    fontWeight: 500,
+                    position: "relative", // Allows the ::after element to be positioned relative to this Box
+                    display: "inline-block", // Ensures the underline aligns with the text width
+                    "&::after": {
+                      content: '""', // Required for the pseudo-element to render
+                      position: "absolute",
+                      left: 0,
+                      bottom: -4, // Adjust the spacing between the text and the underline
+                      width: "100%", // Makes the underline span the width of the text
+                      height: "2px", // Thickness of the underline
+                      backgroundImage:
+                        "linear-gradient(90deg, #00FF00, #004400)", // Replace with gradient colors
+                      boxShadow:
+                        "0 33px 80px 0 rgba(0, 0, 0, 0.1), 0 16px 40px 0 rgba(0, 0, 0, 0.2)", // Shadow for effect
+                      borderRadius: "1px", // Optional: rounded underline edges
+                    },
+                  }}
+                >
+                  patched
+                </Box>
+              </Box>
+
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "white",
+                    opacity: 0.8,
+                  }}
+                >
+                  <Icon icon="mdi:github" width={24} height={24} />
+                  <Box component="span" sx={{ ml: 1 }}>
+                    1.1k
+                  </Box>
+                </Box>
+                <Button
+                  variant="contained"
+                  sx={{ textTransform: "none", color: "white" }}
+                >
+                  Sign In
+                </Button>
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+
+        {/* <Hero /> */}
+        <Box
+          sx={{
+            backgroundColor: "background.default",
+            color: "white",
+            pt: 20,
+            pb: 8,
+            textAlign: "center",
+          }}
+        >
+          <Container maxWidth="lg">
+            <Typography color="textSecondary" gutterBottom>
+              Trusted by 2,300+ users
+            </Typography>
+
+            <Typography variant="h2" fontWeight="bold" sx={{ mb: 3 }}>
+              Patch your code and docs.
+              <br />
+              Effortlessly.
+            </Typography>
+
+            <Typography
+              variant="h6"
+              color="primary"
+              sx={{
+                maxWidth: 600,
+                mx: "auto",
+                mb: 6,
+              }}
+            >
+              Patched automates quality and maintenance tasks, so your team can
+              ship code even faster.
+            </Typography>
+
+            <Stack
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+              sx={{ mb: 4 }}
+            >
+              <Button
+                variant="contained"
+                size="large"
+                sx={{ textTransform: "none", color: "white" }}
+              >
+                Try Patched
+              </Button>
+
+              <Button
+                variant="outlined"
+                size="large"
+                startIcon={<Icon icon="mdi:github" />}
+                sx={{ textTransform: "none", color: "white" }}
+              >
+                Patchwork
+              </Button>
+            </Stack>
+
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              Backed by
+              <Box
+                component="span"
+                sx={{
+                  backgroundColor: "orange",
+                  color: "white",
+                  px: 0.5,
+                }}
+              >
+                Y
+              </Box>
+              Combinator
+            </Typography>
+          </Container>
+        </Box>
+
+        {/* <Features /> */}
+        <Box
+          sx={{
+            backgroundColor: "background.default",
+            color: "white",
+            py: 8,
+          }}
+        >
+          <Container maxWidth="lg">
+            <Typography
+              variant="h4"
+              align="center"
+              fontWeight="bold"
+              gutterBottom
+            >
+              Customizable workflows that carry out tedious, repetitive tasks.
+            </Typography>
+
+            <Typography
+              variant="body1"
+              color="textSecondary"
+              align="center"
+              sx={{ maxWidth: 800, mx: "auto", mb: 4 }}
+            >
+              Use ready-to-go patchflows or create your own to fix bugs, patch
+              vulnerabilities, update markdowns and more.
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                gap: 2,
+                mb: 4,
+              }}
+            >
+              {features.map((feature) => (
+                <Button
+                  key={feature.id}
+                  variant={
+                    activeFeature.id === feature.id ? "contained" : "outlined"
+                  }
+                  startIcon={<Icon icon={`clarity:${feature.icon}`} />}
+                  onClick={() => setActiveFeature(feature)}
+                  sx={{ textTransform: "none", color: "white" }}
+                >
+                  {feature.title}
                 </Button>
               ))}
             </Box>
-            <Box>
-              <Button
-                variant="contained"
-                sx={{
-                  ml: 2,
-                  backgroundColor: "black",
-                  borderRadius: 12,
-                  "&:hover": {
-                    backgroundColor: "#333",
-                  },
-                }}
-              >
-                Sign Up
-              </Button>
-              <Button color="inherit" sx={{ ml: 1 }}>
-                Log In
-              </Button>
-            </Box>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Container
-        maxWidth="lg"
-        sx={{
-          mt: 8,
-          px: { xs: 0, sm: 2 },
-        }}
-      >
-        <Box sx={{ textAlign: "center", px: 2 }}>
-          <Typography
-            variant="h1"
-            component="h1"
-            sx={{
-              fontSize: "3.5rem",
-              fontWeight: 600,
-              mb: 1,
-            }}
-          >
-            Bring your characters to life.
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{
-              color: "text.secondary",
-              mb: 3,
-              fontSize: "1.125rem",
-            }}
-          >
-            Pro-creator. Pro-human.
-          </Typography>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "black",
-              color: "white",
-              px: 4,
-              py: 1,
-              fontSize: "1rem",
-              "&:hover": {
-                backgroundColor: "#333",
-              },
-              borderRadius: 12,
-            }}
-          >
-            Start Creating
-          </Button>
-        </Box>
 
-        {/* <FeaturedCreators creators={creators} /> */}
-        <Box sx={{ mt: 8 }}>
-          <Typography
-            variant="h2"
-            component="h2"
-            sx={{
-              fontSize: "1.5rem",
-              fontWeight: 600,
-              mb: 4,
-              textAlign: "left",
-              pl: 2,
-            }}
-          >
-            Featured Creators
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 4,
-              px: 2,
-              pb: 2,
-              "::-webkit-scrollbar": {
-                height: "8px",
-              },
-              "::-webkit-scrollbar-track": {
-                background: "#f1f1f1",
-                borderRadius: "4px",
-              },
-              "::-webkit-scrollbar-thumb": {
-                background: "#888",
-                borderRadius: "4px",
-                "&:hover": {
-                  background: "#555",
-                },
-              },
-              msOverflowStyle: "none",
-              scrollbarWidth: "thin",
-            }}
-          >
-            {creators.map((creator, index) => (
-              <Box
-                key={index}
-                sx={{
-                  flexShrink: 0,
-                  display: "flex",
-                  justifyContent: "center", // Centers the green box horizontally in the blue box
-                  alignItems: "center", // Centers the green box vertically in the blue box
-                }}
-              >
-                {/* <CreatorCard {...creator} /> */}
-                <Box
-                  sx={{
-                    textAlign: "center",
-                    width: "250px",
-                    display: "flex",
-                    flexDirection: "column", // Ensures content is stacked vertically
-                    alignItems: "center", // Centers the content horizontally inside the green box
-                    justifyContent: "center", // Centers the content vertically inside the green box
-                    "&:hover": {
-                      transform: "scale(1.05)",
-                    },
-                    p: 5,
-                    border: "2px solid #E4E4E7",
-                    borderRadius: 5,
-                    position: "relative",
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={creator.image}
-                    alt={creator.name}
-                    sx={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "50%",
-                      mb: 1,
-                      transition: "transform 0.2s",
-                    }}
-                  />
-                  <Typography
-                    variant="subtitle1"
-                    color="text.primary"
-                    sx={{ fontWeight: 500 }}
-                  >
-                    {creator.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ fontSize: "0.875rem" }}
-                  >
-                    {creator.description}
-                  </Typography>
-                  <Link>{creator.link}</Link>
-                </Box>
-              </Box>
-            ))}
-          </Box>
-        </Box>
-      </Container>
-
-      {/* <InteractiveStorytellingSection /> */}
-      <Box
-        sx={{
-          backgroundColor: "black",
-          color: "white",
-          py: 12,
-          mt: 8,
-          textAlign: "center",
-        }}
-      >
-        <Container maxWidth="lg">
-          <Box
-            ref={ref}
-            sx={{
-              backgroundColor: "black",
-              color: "white",
-              py: { xs: 8, md: 12 },
-              minHeight: "100vh",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Container maxWidth="lg">
-              <motion.div
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                variants={containerVariants}
-              >
-                <motion.div variants={itemVariants}>
-                  <Typography
-                    variant="h2"
-                    component="h1"
-                    sx={{
-                      fontSize: { xs: "2.5rem", sm: "3rem", md: "3.5rem" },
-                      fontWeight: 600,
-                      mb: 2,
-                      lineHeight: 1.2,
-                    }}
-                  >
-                    The Next Generation of
-                    <br />
-                    Interactive Storytelling
-                  </Typography>
-                </motion.div>
-
-                <motion.div variants={itemVariants}>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{
-                      color: "rgba(255, 255, 255, 0.7)",
-                      mb: 6,
-                      fontSize: { xs: "1rem", sm: "1.125rem" },
-                    }}
-                  >
-                    Engage with your fans by letting them
-                    <br />
-                    chat directly with your characters.
-                  </Typography>
-                </motion.div>
-
-                <motion.div variants={itemVariants}>
-                  <Box
-                    component="button"
-                    sx={{
-                      backgroundColor: "white",
-                      color: "black",
-                      border: "none",
-                      borderRadius: "50px",
-                      padding: "12px 24px",
-                      fontSize: "1rem",
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      transition: "background-color 0.3s",
-                      "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.8)",
-                      },
-                    }}
-                  >
-                    Get Started
-                  </Box>
-                </motion.div>
-              </motion.div>
-            </Container>
-          </Box>
-
-          <Box
-            sx={{
-              position: "relative",
-              maxWidth: "1200px",
-              // margin: "0 auto",
-            }}
-          >
             <Box
-              component="img"
-              src="https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public/images/public/images/chat_screen_black.png?width=3840&height=3840&quality=75"
-              alt="Interactive Chat Interface"
               sx={{
-                width: "100%",
-                height: "auto",
-                borderRadius: "12px",
-                boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
+                display: "flex",
+                justifyContent: "center",
+                mb: 4,
               }}
-            />
-          </Box>
-        </Container>
-      </Box>
-      {/* <OpportunitiesSection /> */}
-      <Box sx={{ py: 12, textAlign: "center" }}>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h2"
-            component="h2"
-            sx={{
-              fontSize: { xs: "2.5rem", md: "3.5rem" },
-              fontWeight: 600,
-              mb: 2,
-              lineHeight: 1.2,
-            }}
-          >
-            Making New
-            <br />
-            Opportunities
-          </Typography>
-
-          <Typography
-            sx={{
-              color: "text.secondary",
-              mb: 3,
-              fontSize: "1.125rem",
-              maxWidth: "600px",
-              mx: "auto",
-            }}
-          >
-            DreamRP is a new avenue for growth and fan engagement.
-            <br />
-            We fight for the survival of creativity by finding new ways
-            <br />
-            to help you monetize your work.
-          </Typography>
-
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "black",
-              color: "white",
-              px: 4,
-              py: 1.5,
-              fontSize: "1rem",
-              mb: 8,
-              "&:hover": {
-                backgroundColor: "#333",
-              },
-            }}
-          >
-            Set up shop
-          </Button>
-
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} md={6}>
-              <Card
+            >
+              <Paper
                 sx={{
-                  height: "100%",
-                  backgroundColor: "#111",
-                  color: "white",
-                  textAlign: "left",
-                }}
-              >
-                <CardContent sx={{ p: 4 }}>
-                  <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
-                    Fans Subscribe
-                  </Typography>
-                  <Typography sx={{ mb: 4, color: "rgba(255,255,255,0.7)" }}>
-                    Create premium characters that cater to your most passionate
-                    fans. Subscribers enjoy unlimited access to exclusive
-                    characters.
-                  </Typography>
-                  <Box sx={{ p: 8 }}>
-                    <Box
-                      component="img"
-                      src="https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public//images/public/images/subscribed.png?width=1920&height=1920&quality=75"
-                      alt="Character Profile"
-                      sx={{
-                        width: "100%",
-                        borderRadius: "12px",
-                        mt: 2,
-                      }}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} md={6}>
-              <Card
-                sx={{
-                  height: "100%",
-                  backgroundColor: "#111",
-                  color: "white",
-                  textAlign: "left",
-                }}
-              >
-                <CardContent sx={{ p: 4 }}>
-                  <Typography variant="h5" sx={{ mb: 2, fontWeight: 600 }}>
-                    Creators Earn
-                  </Typography>
-                  <Typography sx={{ mb: 4, color: "rgba(255,255,255,0.7)" }}>
-                    Manage your fanbase and make a living doing what you love.
-                    We provide the tools to help you grow your business.
-                  </Typography>
-                  <Box sx={{ p: 8 }}>
-                    <Box
-                      component="img"
-                      src="https://hjvcekjqqfebmurtwjle.supabase.co/storage/v1/render/image/public//images/public/images/insights.png?width=1920&height=1920&quality=75"
-                      alt="Character Profile"
-                      sx={{
-                        width: "100%",
-                        borderRadius: "12px",
-                        mt: 2,
-                      }}
-                    />
-                  </Box>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* Peoneering ethic ai */}
-      <Box
-        ref={ref1}
-        sx={{
-          bgcolor: "black",
-          color: "white",
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          py: { xs: 8, md: 12 },
-          position: "relative",
-        }}
-      >
-        <Container maxWidth="lg">
-          <motion.div
-            initial="hidden"
-            animate={isInView1 ? "visible" : "hidden"}
-            variants={containerVariants}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            <motion.div variants={itemVariants}>
-              <Typography
-                component="h1"
-                sx={{
-                  fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
-                  fontWeight: 700,
-                  mb: 3,
-                  lineHeight: 1.2,
-                }}
-              >
-                Pioneering
-                <br />
-                Ethical AI
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Typography
-                sx={{
-                  fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                  mb: 2,
-                  maxWidth: "600px",
-                }}
-              >
-                Join us in building the world is first
-                <br />
-                100% consensually-trained AI model.
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Typography
-                sx={{
-                  fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                  mb: 4,
-                  opacity: 0.8,
-                }}
-              >
-                Opt-in to transparency.
-              </Typography>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "white",
-                  color: "black",
-                  fontSize: { xs: "1rem", sm: "1.125rem" },
-                  py: 1.5,
-                  px: 4,
-                  borderRadius: "50px",
-                  textTransform: "none",
-                  mb: 8,
-                  "&:hover": {
-                    bgcolor: "rgba(255, 255, 255, 0.9)",
-                  },
-                }}
-              >
-                Learn More
-              </Button>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Box
-                sx={{
-                  bgcolor: "rgba(255, 255, 255, 0.05)",
-                  borderRadius: "16px",
+                  backgroundColor: "rgba(0,0,0,0.3)",
                   p: 2,
-                  maxWidth: "600px",
-                  backgroundColor: "white",
+                  borderRadius: 2,
+                  maxWidth: "100%",
+                  maxHeight: "70vh",
+                  overflow: "hidden",
                 }}
               >
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={consent}
-                      onChange={(e) => setConsent(e.target.checked)}
-                      sx={{
-                        color: "black",
-                        "&.Mui-checked": {
-                          color: "black",
-                        },
-                      }}
-                    />
-                  }
-                  label="I consent to the use of my data for training and development of DreamRP's clean AI model."
-                  sx={{
-                    color: "black",
-                    "& .MuiFormControlLabel-label": {
-                      fontSize: { xs: "0.9rem", sm: "1rem" },
-                    },
+                <Image
+                  src={activeFeature.preview}
+                  alt={activeFeature.title}
+                  width={1080}
+                  height={720}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    objectFit: "contain",
                   }}
                 />
-              </Box>
-            </motion.div>
-          </motion.div>
-        </Container>
-      </Box>
-      {/* <SustainableFutureSection /> */}
-      <Box sx={{ py: 12, backgroundColor: "white" }}>
-        <Container maxWidth="lg">
-          <motion.div
-            ref={refsustainable}
-            initial="hidden"
-            animate={isInViewsustainable ? "visible" : "hidden"}
-            variants={containerVariants}
-          >
-            <Box sx={{ maxWidth: "800px", mb: 8 }}>
-              <motion.div variants={itemVariants}>
-                <Typography
-                  variant="h2"
-                  component="h2"
-                  sx={{
-                    fontSize: { xs: "2.5rem", md: "3.5rem" },
-                    fontWeight: 600,
-                    mb: 3,
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Building a
-                  <br />
-                  Sustainable Future
-                </Typography>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <Typography
-                  sx={{
-                    color: "text.secondary",
-                    mb: 3,
-                    fontSize: "1.125rem",
-                  }}
-                >
-                  We are powered by specialized models that are much smaller and
-                  more efficient, while providing the best roleplaying
-                  experience.
-                </Typography>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <Typography
-                  sx={{
-                    color: "text.secondary",
-                    mb: 4,
-                    fontSize: "1.125rem",
-                  }}
-                >
-                  Below are energy consumption figures for various activities
-                  over 1 hour of usage.
-                </Typography>
-              </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "black",
-                    color: "white",
-                    px: 4,
-                    py: 1.5,
-                    fontSize: "1rem",
-                    "&:hover": {
-                      backgroundColor: "#333",
-                    },
-                  }}
-                >
-                  Learn More
-                </Button>
-              </motion.div>
+              </Paper>
             </Box>
 
-            <motion.div variants={itemVariants}>
-              <Grid container spacing={4} sx={{ mt: 8 }}>
-                {energyStats.map((stat, index) => (
-                  <Grid item xs={12} sm={6} md={3} key={index}>
-                    <Box sx={{ textAlign: "center" }}>
-                      <Typography
-                        variant="h2"
-                        component="div"
-                        sx={{
-                          fontSize: { xs: "2.5rem", md: "3.5rem" },
-                          fontWeight: 600,
-                          mb: 1,
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
-                          gap: 1,
-                        }}
-                      >
-                        {stat.value}
-                        <Typography
-                          component="span"
-                          sx={{
-                            fontSize: "1rem",
-                            mb: 1,
-                            opacity: 0.7,
-                          }}
-                        >
-                          {stat.unit}
-                        </Typography>
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontSize: "0.875rem",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.1em",
-                          opacity: 0.7,
-                        }}
-                      >
-                        {stat.label}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            </motion.div>
-          </motion.div>
-        </Container>
-      </Box>
-
-      {/* FAQ */}
-      <Box>
-        <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
-          <Grid container spacing={{ xs: 4, md: 8 }} alignItems="flex-start">
-            {/* Left Column - Title */}
-            <Grid item xs={12} md={5}>
-              <Box sx={{ maxWidth: 500, mb: { xs: 4, md: 0 } }}>
-                <Typography
-                  component="h2"
-                  sx={{
-                    fontSize: { xs: "2.5rem", sm: "3rem", md: "3.5rem" },
-                    fontWeight: 800,
-                    lineHeight: 1.2,
-                    mb: 3,
-                  }}
-                >
-                  Frequently Asked Questions
-                </Typography>
-                <Typography
-                  sx={{
-                    fontSize: { xs: "1.1rem", sm: "1.25rem" },
-                    color: "text.secondary",
-                    lineHeight: 1.5,
-                  }}
-                >
-                  Find quick answers to help you understand our platform and
-                  make the most of it
-                </Typography>
-              </Box>
-            </Grid>
-
-            {/* Right Column - Accordions */}
-            <Grid item xs={12} md={7}>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                {faqs.map((faq, index) => (
-                  <Accordion
+            <Box
+              sx={{
+                overflow: "hidden",
+                backgroundColor: "rgba(0,0,0,0.3)",
+                py: 2,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  animation: "scroll 20s linear infinite",
+                  "& > *": {
+                    flex: "0 0 auto",
+                    mx: 2,
+                  },
+                }}
+              >
+                {[...features2, ...features2].map((feature, index) => (
+                  <Typography
                     key={index}
-                    expanded={expanded === `panel${index}`}
-                    onChange={handleChange(`panel${index}`)}
-                    elevation={0}
+                    variant="body2"
+                    color="textSecondary"
                     sx={{
-                      border: "none",
-                      "&:before": { display: "none" },
-                      backgroundColor: "transparent",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 1,
                     }}
                   >
-                    <AccordionSummary
-                      expandIcon={
-                        <Icon
-                          icon="octicon:plus-16"
-                          fontSize={24}
-                          style={{
-                            transform:
-                              expanded === `panel${index}`
-                                ? "rotate(45deg)"
-                                : "none",
-                            transition: "transform 0.3s ease",
-                          }}
-                        />
-                      }
-                      sx={{
-                        padding: 0,
-                        "& .MuiAccordionSummary-content": {
-                          margin: 0,
-                        },
-                        "&.Mui-expanded": {
-                          minHeight: 48,
-                        },
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontSize: { xs: "1.25rem", sm: "1.5rem" },
-                          fontWeight: 600,
-                        }}
-                      >
-                        {faq.question}
-                      </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails sx={{ padding: "0 0 16px 0" }}>
-                      <Typography
-                        sx={{
-                          fontSize: { xs: "1rem", sm: "1.125rem" },
-                          color: "text.secondary",
-                          lineHeight: 1.6,
-                        }}
-                      >
-                        {faq.answer}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
+                    {feature}
+                    <Box component="span" color="primary.main">
+                      ×
+                    </Box>
+                  </Typography>
                 ))}
               </Box>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-      {/* <JoinMissionSection /> */}
-      <Box sx={{ py: 12, textAlign: "center" }}>
-        <Container maxWidth="lg">
+            </Box>
+
+            <style jsx global>{`
+              @keyframes scroll {
+                from {
+                  transform: translateX(0);
+                }
+                to {
+                  transform: translateX(-50%);
+                }
+              }
+            `}</style>
+          </Container>
+        </Box>
+
+        {/* FAQ Section */}
+        <Container maxWidth="md" sx={{ py: 6 }}>
           <Typography
-            variant="h2"
-            component="h2"
-            sx={{
-              fontSize: { xs: "2.5rem", md: "3.5rem" },
-              fontWeight: 600,
-              mb: 4,
-              lineHeight: 1.2,
-            }}
+            variant="h4"
+            align="center"
+            gutterBottom
+            fontWeight="bold"
           >
-            Join Our Mission
+            Frequently Asked Questions
+          </Typography>
+          <Typography
+            variant="body1"
+            align="center"
+            color="textSecondary"
+            paragraph
+          >
+            Know more about the Patched app and our open-source framework
+            Patchwork.
           </Typography>
 
-          <Box sx={{ mb: 6 }}>
-            <Button
-              variant="contained"
+          {faqs.map((faq, index) => (
+            <Accordion
+              key={index}
+              expanded={openIndex === index}
+              onChange={() => setOpenIndex(openIndex === index ? null : index)}
               sx={{
-                backgroundColor: "black",
-                color: "white",
-                px: 4,
-                py: 1,
-                fontSize: "0.8rem",
+                backgroundColor: "background.paper",
                 mb: 2,
-                "&:hover": {
-                  backgroundColor: "#333",
-                },
-                borderRadius: 10,
+                "&:before": { display: "none" },
               }}
             >
-              Create
-            </Button>
-            <Box>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "black",
-                  color: "white",
-                  px: 4,
-                  py: 1,
-                  fontSize: "0.8rem",
-                  "&:hover": {
-                    backgroundColor: "#333",
-                  },
-                  borderRadius: 10,
-                }}
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon sx={{ color: "primary.main" }} />}
               >
-                Support us
-              </Button>
-            </Box>
-            <Typography
-              sx={{
-                color: "text.secondary",
-                mt: 4,
-                fontSize: "1.125rem",
-              }}
-            >
-              Or start chatting with characters!
-            </Typography>
-          </Box>
+                <Typography>{faq.question}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography color="textSecondary">{faq.answer}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
         </Container>
-        {/* <CharacterList /> */}
-        <Box sx={{ mt: 2 }}>
-          <Box
-            sx={{
-              display: "flex",
-              overflowX: "auto",
-              gap: 4,
-              px: 2,
-              pb: 2,
-              "::-webkit-scrollbar": {
-                height: "8px",
-              },
-              "::-webkit-scrollbar-track": {
-                background: "#f1f1f1",
-                borderRadius: "4px",
-              },
-              "::-webkit-scrollbar-thumb": {
-                background: "#888",
-                borderRadius: "4px",
-                "&:hover": {
-                  background: "#555",
-                },
-              },
-              msOverflowStyle: "none",
-              scrollbarWidth: "thin",
-            }}
-          >
-            {characters.map((character, index) => (
-              <Box
-                key={index}
-                sx={{
-                  flexShrink: 0,
-                  display: "flex",
-                  justifyContent: "center", // Centers the green box horizontally in the blue box
-                  alignItems: "center", // Centers the green box vertically in the blue box
-                }}
+
+        {/* <CoreFeatures /> */}
+        <Box
+          sx={{
+            backgroundColor: "background.default",
+            color: "white",
+            py: 8,
+          }}
+        >
+          <Container maxWidth="lg">
+            <Box textAlign="center" mb={4}>
+              <Typography variant="overline" color="primary" display="block">
+                Core Features
+              </Typography>
+              <Typography variant="h4" fontWeight="bold">
+                Build the AI assistance you need.
+              </Typography>
+              <Typography variant="body1" color="textSecondary">
+                After all you are a dev, not a pilot.
+              </Typography>
+            </Box>
+
+            <Grid container spacing={4}>
+              {features3.map((feature, index) => (
+                <Grid item xs={12} sm={6} md={3} key={index}>
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      backgroundColor: "rgba(0,0,0,0.3)",
+                      p: 3,
+                      borderRadius: 2,
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                      border: "1px solid",
+                      borderColor: "divider",
+                    }}
+                  >
+                    <Box mb={2}>
+                      <Icon
+                        icon={feature.icon}
+                        width={48}
+                        height={48}
+                        color="#10b981"
+                      />
+                    </Box>
+                    <Typography variant="h6" gutterBottom>
+                      {feature.title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {feature.description}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Box>
+
+        {/* <Pricing /> */}
+        <Box
+          sx={{
+            backgroundColor: "background.default",
+            color: "white",
+            py: 8,
+          }}
+        >
+          <Container maxWidth="lg">
+            <Box textAlign="center" mb={4}>
+              <Typography
+                variant="overline"
+                color="textSecondary"
+                display="block"
               >
-                {/* <CreatorCard {...creator} /> */}
+                Pricing Plan
+              </Typography>
+              <Typography variant="h4" fontWeight="bold" gutterBottom>
+                Usage-based pricing with cost controls.
+              </Typography>
+            </Box>
+
+            <Grid container spacing={4}>
+              {plans.map((plan, index) => (
+                <Grid item xs={12} sm={4} key={index}>
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      backgroundColor: "rgba(0,0,0,0.3)",
+                      p: 3,
+                      borderRadius: 2,
+                      border:
+                        index === 1 ? "1px solid" : "1px solid transparent",
+                      borderColor: index === 1 ? "primary.main" : "divider",
+                      position: "relative",
+                      overflow: "hidden",
+                      color: "white",
+                    }}
+                  >
+                    {index === 1 && (
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: 4,
+                          background:
+                            "linear-gradient(to right, transparent, primary.main, transparent)",
+                        }}
+                      />
+                    )}
+
+                    <Box display="flex" alignItems="center" mb={2} gap={1}>
+                      <Icon icon={plan.icon} width={24} height={24} />
+                      <Typography variant="subtitle2" color="textSecondary">
+                        {plan.name}
+                      </Typography>
+                    </Box>
+
+                    <Box mb={2}>
+                      <Typography variant="body2" color="textSecondary">
+                        {plan.description}
+                      </Typography>
+                      <Box display="flex" alignItems="baseline" mt={1}>
+                        <Typography variant="h4" fontWeight="bold">
+                          {plan.price}
+                        </Typography>
+                        {plan.period && (
+                          <Typography
+                            variant="body2"
+                            color="textSecondary"
+                            ml={1}
+                          >
+                            {plan.period}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+
+                    <Button
+                      variant={
+                        plan.buttonVariant === "contained"
+                          ? "contained"
+                          : "outlined"
+                      }
+                      color="primary"
+                      fullWidth
+                      sx={{
+                        mb: 3,
+                        textTransform: "none",
+                        color: "white",
+                      }}
+                    >
+                      {plan.buttonText}
+                    </Button>
+
+                    <Box>
+                      {plan.features.map((feature, featureIndex) => (
+                        <Box
+                          key={featureIndex}
+                          display="flex"
+                          alignItems="center"
+                          gap={1}
+                          mb={1}
+                        >
+                          <Icon
+                            icon="carbon:checkmark"
+                            color="#10b981"
+                            width={20}
+                            height={20}
+                          />
+                          <Typography variant="body2" color="textSecondary">
+                            {feature}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
+
+                    {plan.highlight && (
+                      <Typography variant="body2" color="textSecondary" mt={2}>
+                        {plan.highlight}
+                      </Typography>
+                    )}
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Box>
+
+        {/* <Blog /> */}
+        <Box sx={{ bgcolor: "black", color: "white", py: 6 }}>
+          <Container maxWidth="lg">
+            <Typography variant="h2" align="center" gutterBottom>
+              Blogs
+            </Typography>
+            <Typography
+              variant="body1"
+              align="center"
+              sx={{ color: "gray.400", mb: 4 }}
+            >
+              Learn what is new and get a behind-the-scenes look at Patched
+            </Typography>
+            <Grid container spacing={4}>
+              {posts.map((post, index) => (
+                <Grid item xs={12} md={4} key={index}>
+                  {/* <BlogPost {...post} /> */}
+                  <Box
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover img": { transform: "scale(1.05)" },
+                    }}
+                  >
+                    {/* Image Container */}
+                    <Box
+                      sx={{
+                        position: "relative",
+                        overflow: "hidden",
+                        borderRadius: 2,
+                        mb: 2,
+                        aspectRatio: "16 / 9",
+                      }}
+                    >
+                      <Image
+                        src={post.image}
+                        alt={post.title}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          transition: "transform 0.3s ease",
+                        }}
+                      />
+                    </Box>
+
+                    {/* Content */}
+                    <Box>
+                      <Typography
+                        variant="h5"
+                        component="h3"
+                        sx={{ color: "white", fontWeight: "bold", mb: 1 }}
+                      >
+                        {post.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{ color: "gray.400", mb: 2 }}
+                      >
+                        {post.date}
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: "gray.400" }}>
+                        {post.description}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Box>
+
+        {/* <Footer /> */}
+        <Box sx={{ bgcolor: "black", color: "white", py: 6 }}>
+          <Container maxWidth="lg">
+            <Grid container spacing={8}>
+              {/* Left Column */}
+              <Grid item xs={12} md={6}>
+                {/* Contact Section */}
+                <Box mb={4}>
+                  <Typography variant="h6" gutterBottom>
+                    Patched Codes
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      color: "gray.400",
+                    }}
+                  >
+                    <Icon icon="ic:outline-mail" width={16} height={16} />
+                    <Link
+                      href="mailto:contact@patched.codes"
+                      color="inherit"
+                      underline="hover"
+                    >
+                      contact@patched.codes
+                    </Link>
+                  </Box>
+                </Box>
+
+                {/* Resources Section */}
+                <Box>
+                  <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                    Resources
+                  </Typography>
+                  <Box component="ul" sx={{ p: 0, m: 0, listStyle: "none" }}>
+                    {["Docs", "Discord", "Blog", "Support"].map((item) => (
+                      <li key={item}>
+                        <Link
+                          href="#"
+                          color="textSecondary"
+                          underline="hover"
+                          sx={{
+                            display: "block",
+                            transition: "color 0.2s",
+                            "&:hover": { color: "white" },
+                          }}
+                        >
+                          {item}
+                        </Link>
+                      </li>
+                    ))}
+                  </Box>
+                </Box>
+              </Grid>
+
+              {/* Right Column */}
+              <Grid item xs={12} md={6}>
                 <Box
                   sx={{
-                    textAlign: "center",
-                    width: "300px",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column", // Ensures content is stacked vertically
-                    alignItems: "center", // Centers the content horizontally inside the green box
-                    justifyContent: "center", // Centers the content vertically inside the green box
-                    "&:hover": {
-                      transform: "scale(1.05)",
-                    },
-                    p: 5,
-                    border: "2px solid #E4E4E7",
-                    borderRadius: 5,
-                    position: "relative",
+                    bgcolor: "rgba(0, 0, 0, 0.5)",
+                    backdropFilter: "blur(5px)",
+                    borderRadius: 2,
+                    p: 4,
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
                   }}
                 >
+                  <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+                    Want to see a live demo?
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: "gray.400", mb: 3 }}>
+                    Share your email with us and we will reach out to you:
+                  </Typography>
                   <Box
-                    component="img"
-                    src={character.image}
-                    alt={character.name}
-                    sx={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "50%",
-                      mb: 1,
-                      transition: "transform 0.2s",
-                    }}
-                  />
-                  <Typography
-                    variant="subtitle1"
-                    color="text.primary"
-                    sx={{ fontWeight: 500 }}
+                    component="form"
+                    noValidate
+                    autoComplete="off"
+                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
                   >
-                    {character.name}
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    color="text.primary"
-                    sx={{ fontWeight: 500 }}
-                  >
-                    @{character.handle}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ fontSize: "0.875rem" }}
-                  >
-                    {character.description}
-                  </Typography>
+                    <TextField
+                      type="email"
+                      placeholder="your@email.com"
+                      fullWidth
+                      InputProps={{
+                        sx: {
+                          bgcolor: "rgba(255, 255, 255, 0.05)",
+                          borderRadius: 1,
+                          color: "white",
+                          "&::placeholder": { color: "gray.500" },
+                        },
+                      }}
+                      sx={{
+                        border: "1px solid rgba(255, 255, 255, 0.1)",
+                        color: "white",
+                      }}
+                    />
+                    <Button
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        bgcolor: "emerald.500",
+                        "&:hover": { bgcolor: "emerald.600" },
+                        color: "white",
+                      }}
+                    >
+                      Request a Demo
+                    </Button>
+                  </Box>
                 </Box>
+              </Grid>
+            </Grid>
+
+            {/* Bottom Section */}
+            <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.1)", mt: 8 }} />
+            <Box
+              sx={{
+                mt: 4,
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              <Typography variant="body2" sx={{ color: "gray.400" }}>
+                Patched Codes, Inc
+                <br />
+                111b South Governors Avenue Dover, DE, 19904 US
+              </Typography>
+              <Box sx={{ display: "flex", gap: 3 }}>
+                {["Github", "Huggingface", "LinkedIn", "Twitter"].map(
+                  (platform) => (
+                    <Link
+                      key={platform}
+                      href="#"
+                      color="textSecondary"
+                      underline="hover"
+                      sx={{
+                        transition: "color 0.2s",
+                        "&:hover": { color: "white" },
+                      }}
+                    >
+                      {platform}
+                    </Link>
+                  )
+                )}
               </Box>
-            ))}
-          </Box>
+            </Box>
+          </Container>
         </Box>
       </Box>
-      {/* <Footer /> */}
-      <Box
-        component="footer"
-        sx={{
-          py: 2,
-          mt: 2,
-          borderTop: "1px solid rgba(0, 0, 0, 0.12)",
-        }}
-      >
-        <Container maxWidth="lg">
-          <Box sx={{ textAlign: "center" }}>
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-              DreamRP Inc. 2024
-            </Typography>
-            <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-              <Link
-                href="#"
-                color="text.secondary"
-                underline="hover"
-                sx={{ fontSize: "0.875rem" }}
-              >
-                Terms of service
-              </Link>
-              <Link
-                href="#"
-                color="text.secondary"
-                underline="hover"
-                sx={{ fontSize: "0.875rem" }}
-              >
-                Privacy policy
-              </Link>
-            </Box>
-          </Box>
-        </Container>
-      </Box>
-    </Box>
+    </ThemeProvider>
   );
 }
-
-export default App;
