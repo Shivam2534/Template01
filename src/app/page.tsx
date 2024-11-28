@@ -140,29 +140,6 @@ const characters = [
 
 const menuBar = [{ menuName: "Create" }, { menuName: "Chat" }];
 
-export function useInView(options = {}) {
-  const [isInView, setIsInView] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsInView(entry.isIntersecting);
-    }, options);
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [options]);
-
-  return [ref, isInView] as const;
-}
-
 function App() {
   const [open, setOpen] = useState(false);
 
@@ -198,6 +175,30 @@ function App() {
       </List>
     </Box>
   );
+
+  function useInView(options = {}) {
+    const [isInView, setIsInView] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const currentRef = ref.current; // Capture the current ref value
+      const observer = new IntersectionObserver(([entry]) => {
+        setIsInView(entry.isIntersecting);
+      }, options);
+
+      if (currentRef) {
+        observer.observe(currentRef);
+      }
+
+      return () => {
+        if (currentRef) {
+          observer.unobserve(currentRef); // Use the captured value
+        }
+      };
+    }, [options]);
+
+    return [ref, isInView] as const;
+  }
 
   const [ref, isInView] = useInView({ threshold: 0.4 });
   const [ref1, isInView1] = useInView({ threshold: 0.2 });
