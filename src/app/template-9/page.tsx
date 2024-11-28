@@ -421,7 +421,11 @@ export default function App() {
                   }
                   startIcon={<Icon icon={`clarity:${feature.icon}`} />}
                   onClick={() => setActiveFeature(feature)}
-                  sx={{ textTransform: "none", color: "white" }}
+                  sx={{
+                    textTransform: "none",
+                    color: "white",
+                    fontSize: { xs: 9, sm: 15, md: 18 },
+                  }}
                 >
                   {feature.title}
                 </Button>
