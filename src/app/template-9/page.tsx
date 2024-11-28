@@ -305,7 +305,10 @@ export default function App() {
               Trusted by 2,300+ users
             </Typography>
 
-            <Typography variant="h2" fontWeight="bold" sx={{ mb: 3 }}>
+            <Typography
+              fontWeight="bold"
+              sx={{ mb: 3, fontSize: { xs: 38, sm: 45, md: 65 } }}
+            >
               Patch your code and docs.
               <br />
               Effortlessly.
