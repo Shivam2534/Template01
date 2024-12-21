@@ -1,5 +1,11 @@
 "use client";
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
 import {
   Box,
   ThemeProvider,
@@ -23,10 +29,11 @@ import {
   Container,
   Input,
   CardMedia,
+  useMediaQuery,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import probzlogo from "../../../public/companyToconnect/probzlogo.svg";
+// import probzlogo from "../../../public/companyToconnect/probzlogo.svg";
 import airtableauth from "../../../public/companyToconnect/airtable-auth.png";
 import notionauth from "../../../public/companyToconnect/notion-auth.png";
 import googlesheetauth from "../../../public/companyToconnect/google-sheet-auth.png";
@@ -40,6 +47,7 @@ import sqlauth from "../../../public/companyToconnect/sql-auth.png";
 import backgroundImgBox from "../../../public/companyToconnect/backgroundImgBox@.svg";
 import recoTemp1 from "../../../public/companyToconnect/recoTemp1.jpg";
 import { m } from "framer-motion";
+import { Theme, useTheme } from "@mui/material/styles";
 
 const ImageUpdater = React.memo(
   ({ getImageSrc }: { getImageSrc: () => string }) => {
@@ -71,7 +79,7 @@ const ImageUpdater = React.memo(
 ImageUpdater.displayName = "ImageUpdater";
 
 export default function DashboardPage() {
-  const theme = createTheme({
+  const theme1 = createTheme({
     palette: {
       primary: {
         main: "#1976d2",
@@ -239,38 +247,41 @@ export default function DashboardPage() {
       "A membership platform with user authentication, profile management, and subscription features.",
   };
 
-  const recomandedTemplates = [
-    {
-      imageURl: recoTemp1.src,
-      title: "Client Portal",
-      templateURL: "",
-    },
-    {
-      imageURl: recoTemp1.src,
-      title: "Project Tracker",
-      templateURL: "",
-    },
-    {
-      imageURl: recoTemp1.src,
-      title: "Employee Directory",
-      templateURL: "",
-    },
-    {
-      imageURl: recoTemp1.src,
-      title: "Sales CRM",
-      templateURL: "",
-    },
-    {
-      imageURl: recoTemp1.src,
-      title: "Content Calendar",
-      templateURL: "",
-    },
-    {
-      imageURl: recoTemp1.src,
-      title: "Company Intranet",
-      templateURL: "",
-    },
-  ];
+  const recomandedTemplates = useMemo(
+    () => [
+      {
+        imageURl: recoTemp1.src,
+        title: "Client Portal",
+        templateURL: "",
+      },
+      {
+        imageURl: recoTemp1.src,
+        title: "Project Tracker",
+        templateURL: "",
+      },
+      {
+        imageURl: recoTemp1.src,
+        title: "Employee Directory",
+        templateURL: "",
+      },
+      {
+        imageURl: recoTemp1.src,
+        title: "Sales CRM",
+        templateURL: "",
+      },
+      {
+        imageURl: recoTemp1.src,
+        title: "Content Calendar",
+        templateURL: "",
+      },
+      {
+        imageURl: recoTemp1.src,
+        title: "Company Intranet",
+        templateURL: "",
+      },
+    ],
+    []
+  );
 
   const MotionCard = m(Card);
 
@@ -540,6 +551,25 @@ export default function DashboardPage() {
     }
   }, []);
 
+  const theme = useTheme<Theme>();
+
+  const isXs = useMediaQuery(theme.breakpoints.only("xs"));
+  const isSm = useMediaQuery(theme.breakpoints.only("sm"));
+  const isMd = useMediaQuery(theme.breakpoints.only("md"));
+
+  // Calculate number of templates to show based on screen size
+  const templatesCount = useMemo(() => {
+    if (isXs) return 2;
+    if (isSm) return 3;
+    if (isMd) return 4;
+    return 6; // Show 6 on desktop and larger screens
+  }, [isXs, isSm, isMd]);
+
+  // Get visible templates
+  const visibleTemplates = useMemo(
+    () => recomandedTemplates.slice(0, templatesCount),
+    [recomandedTemplates, templatesCount]
+  );
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex", height: "100vh" }}>
@@ -548,7 +578,10 @@ export default function DashboardPage() {
           sx={{
             width: DRAWER_WIDTH,
             flexShrink: 0,
-            display: "flex",
+            display: {
+              xs: "none",
+              sm: "flex",
+            },
             flexDirection: "column",
             justifyContent: "space-between",
             backgroundColor: "#FFFFFF",
@@ -656,7 +689,7 @@ export default function DashboardPage() {
             overflow: "auto",
             px: {
               lg: 15,
-              md: 10,
+              md: 2,
             },
           }}
         >
@@ -1144,7 +1177,7 @@ export default function DashboardPage() {
 
               <Box sx={{ display: "flex", gap: 1.8 }}>
                 <Box sx={{ display: "flex", gap: 2 }}>
-                  {recomandedTemplates.map((template) => (
+                  {visibleTemplates.map((template) => (
                     <Box
                       key={template.title}
                       sx={{
@@ -1181,6 +1214,7 @@ export default function DashboardPage() {
                     </Box>
                   ))}
                 </Box>
+
                 <Box
                   sx={{
                     width: "2px",
