@@ -26,19 +26,19 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
-import probzlogo from "../../../public/companyToconnect/probzlogo.svg";
-import airtableauth from "../../../public/companyToconnect/airtable-auth.png";
-import notionauth from "../../../public/companyToconnect/notion-auth.png";
-import googlesheetauth from "../../../public/companyToconnect/google-sheet-auth.png";
-import smartsuiteauth from "../../../public/companyToconnect/smartsuite-auth.png";
-import xanoauth from "../../../public/companyToconnect/xano-auth.png";
-import mondayauth from "../../../public/companyToconnect/monday-auth.png";
-import supabaseauth from "../../../public/companyToconnect/supabase-auth.png";
-import hubspotauth from "../../../public/companyToconnect/hubspot-auth.png";
-import bigqueryauth from "../../../public/companyToconnect/bigquery-auth.png";
-import sqlauth from "../../../public/companyToconnect/sql-auth.png";
-import backgroundImgBox from "../../../public/companyToconnect/backgroundImgBox@.svg";
-import recoTemp1 from "../../../public/companyToconnect/recoTemp1.jpg";
+import probzlogo from "../../public/companyToconnect/probzlogo.svg";
+import airtableauth from "../../public/companyToconnect/airtable-auth.png";
+import notionauth from "../../public/companyToconnect/notion-auth.png";
+import googlesheetauth from "../../public/companyToconnect/google-sheet-auth.png";
+import smartsuiteauth from "../../public/companyToconnect/smartsuite-auth.png";
+import xanoauth from "../../public/companyToconnect/xano-auth.png";
+import mondayauth from "../../public/companyToconnect/monday-auth.png";
+import supabaseauth from "../../public/companyToconnect/supabase-auth.png";
+import hubspotauth from "../../public/companyToconnect/hubspot-auth.png";
+import bigqueryauth from "../../public/companyToconnect/bigquery-auth.png";
+import sqlauth from "../../public/companyToconnect/sql-auth.png";
+import backgroundImgBox from "../../public/companyToconnect/backgroundImgBox@.svg";
+import recoTemp1 from "../../public/companyToconnect/recoTemp1.jpg";
 import { m } from "framer-motion";
 
 const ImageUpdater = React.memo(

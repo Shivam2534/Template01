@@ -79,17 +79,6 @@ const ImageUpdater = React.memo(
 ImageUpdater.displayName = "ImageUpdater";
 
 export default function DashboardPage() {
-  const theme1 = createTheme({
-    palette: {
-      primary: {
-        main: "#1976d2",
-      },
-      background: {
-        default: "#f8f9fa",
-      },
-    },
-  });
-
   const DRAWER_WIDTH = 250;
 
   const menuItems = [
@@ -551,15 +540,26 @@ export default function DashboardPage() {
     }
   }, []);
 
-  const theme = useTheme<Theme>();
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#1976d2",
+      },
+      background: {
+        default: "#f8f9fa",
+      },
+    },
+  });
 
-  const isXs = useMediaQuery(theme.breakpoints.only("xs"));
-  const isSm = useMediaQuery(theme.breakpoints.only("sm"));
-  const isMd = useMediaQuery(theme.breakpoints.only("md"));
+  const theme1 = useTheme<Theme>();
+
+  const isXs = useMediaQuery(theme1.breakpoints.only("xs"));
+  const isSm = useMediaQuery(theme1.breakpoints.only("sm"));
+  const isMd = useMediaQuery(theme1.breakpoints.only("md"));
 
   // Calculate number of templates to show based on screen size
   const templatesCount = useMemo(() => {
-    if (isXs) return 2;
+    if (isXs) return 1;
     if (isSm) return 3;
     if (isMd) return 4;
     return 6; // Show 6 on desktop and larger screens
@@ -580,7 +580,7 @@ export default function DashboardPage() {
             flexShrink: 0,
             display: {
               xs: "none",
-              sm: "flex",
+              md: "flex",
             },
             flexDirection: "column",
             justifyContent: "space-between",
@@ -689,7 +689,8 @@ export default function DashboardPage() {
             overflow: "auto",
             px: {
               lg: 15,
-              md: 2,
+              md: 5,
+              xs: 1,
             },
           }}
         >
@@ -1527,7 +1528,10 @@ export default function DashboardPage() {
                   sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    gap: 2.5,
+                    gap: {
+                      lg: 2.5,
+                      xs: 1.5,
+                    },
                     alignItems: "center",
                   }}
                 >
@@ -1568,7 +1572,7 @@ export default function DashboardPage() {
                 <Box>
                   <Button
                     variant="contained"
-                    startIcon={<Icon icon="ri:add-fill" />}
+                    startIcon={!isXs && <Icon icon="ri:add-fill" />}
                     sx={{
                       backgroundColor: "black",
                       color: "white",
@@ -1579,6 +1583,9 @@ export default function DashboardPage() {
                       borderRadius: 3,
                       boxShadow: "none",
                       fontSize: "13px",
+                      px: {
+                        xs: 1.4,
+                      },
                     }}
                   >
                     Create new
@@ -1589,7 +1596,10 @@ export default function DashboardPage() {
               <Box sx={{ mt: 2 }}>
                 <MotionCard
                   sx={{
-                    maxWidth: 245,
+                    maxWidth: {
+                      sm: 245,
+                      xs: "100%",
+                    },
                     backgroundColor: "#F8F9FA",
                     borderRadius: 4,
                     overflow: "hidden",
